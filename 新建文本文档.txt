@@ -1,0 +1,17 @@
+adc10R                 PA1          ADC1_2
+adcsr101               PA2          ADC1_3
+adcsr103               PA3          ADC1_4
+
+adcV+                  PA7          ADC2_4
+adcV-                   PA6          ADC2_3
+
+adcc0                   PB0          ADC3_12
+adch2                  PB1           ADC3_1
+
+adcsmoke            PB2           ADC2_12
+
+smokeled             PB10
+i2cscl                   PB6
+i2csda                  PB7
+
+dcout                  PB11

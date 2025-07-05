@@ -1,0 +1,13 @@
+.\objects\mbrtu.o: moudbus\modbus\rtu\mbrtu.c
+.\objects\mbrtu.o: C:\keil_v5\ARM\ARMCLANG\include\stdlib.h
+.\objects\mbrtu.o: C:\keil_v5\ARM\ARMCLANG\include\string.h
+.\objects\mbrtu.o: .\moudbus\port\port.h
+.\objects\mbrtu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+.\objects\mbrtu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+.\objects\mbrtu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\mbrtu.o: .\moudbus\modbus\include\mb.h
+.\objects\mbrtu.o: .\moudbus\modbus\include\mbport.h
+.\objects\mbrtu.o: .\moudbus\modbus\include\mbproto.h
+.\objects\mbrtu.o: moudbus\modbus\rtu\mbrtu.h
+.\objects\mbrtu.o: .\moudbus\modbus\include\mbframe.h
+.\objects\mbrtu.o: moudbus\modbus\rtu\mbcrc.h

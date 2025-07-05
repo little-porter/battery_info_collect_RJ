@@ -1,0 +1,12 @@
+.\objects\mbfuncother.o: moudbus\modbus\functions\mbfuncother.c
+.\objects\mbfuncother.o: C:\keil_v5\ARM\ARMCLANG\include\stdlib.h
+.\objects\mbfuncother.o: C:\keil_v5\ARM\ARMCLANG\include\string.h
+.\objects\mbfuncother.o: .\moudbus\port\port.h
+.\objects\mbfuncother.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+.\objects\mbfuncother.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+.\objects\mbfuncother.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\mbfuncother.o: .\moudbus\modbus\include\mb.h
+.\objects\mbfuncother.o: .\moudbus\modbus\include\mbport.h
+.\objects\mbfuncother.o: .\moudbus\modbus\include\mbproto.h
+.\objects\mbfuncother.o: .\moudbus\modbus\include\mbframe.h
+.\objects\mbfuncother.o: .\moudbus\modbus\include\mbconfig.h
