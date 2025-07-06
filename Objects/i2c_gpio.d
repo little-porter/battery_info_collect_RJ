@@ -1,6 +1,6 @@
 .\objects\i2c_gpio.o: Hardware\i2c_gpio.c
 .\objects\i2c_gpio.o: Hardware\i2c_gpio.h
-.\objects\i2c_gpio.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\i2c_gpio.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\i2c_gpio.o: .\CMSIS\stm32f30x.h
 .\objects\i2c_gpio.o: .\CMSIS\core_cm4.h
 .\objects\i2c_gpio.o: .\CMSIS\core_cmInstr.h
@@ -34,4 +34,4 @@
 .\objects\i2c_gpio.o: .\Lib\inc\stm32f30x_wwdg.h
 .\objects\i2c_gpio.o: .\Lib\inc\stm32f30x_misc.h
 .\objects\i2c_gpio.o: .\App\mcu_init.h
-.\objects\i2c_gpio.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\i2c_gpio.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h

@@ -6,7 +6,7 @@
 #include "adc.h"
 
 
-#define FLASH_PAGE_SIZE         ((uint32_t)0x00000800)
+
 
 
 #define FLASH_OTA_DATA_ADDR                 0x0800c800    //otaÊý¾Ý´æ´¢µØÖ·   //2k

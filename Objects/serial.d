@@ -1,7 +1,7 @@
 .\objects\serial.o: Console\serial.c
 .\objects\serial.o: .\CMSIS\stm32f30x.h
 .\objects\serial.o: .\CMSIS\core_cm4.h
-.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\serial.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\serial.o: .\CMSIS\core_cmInstr.h
 .\objects\serial.o: .\CMSIS\core_cmFunc.h
 .\objects\serial.o: .\CMSIS\core_cmSimd.h
@@ -34,10 +34,10 @@
 .\objects\serial.o: .\Lib\inc\stm32f30x_misc.h
 .\objects\serial.o: Console\serial.h
 .\objects\serial.o: Console\fifo.h
-.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\serial.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\serial.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\serial.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
 .\objects\serial.o: .\App\stdint.h
-.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\serial.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\serial.o: Console\console.h
-.\objects\serial.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\serial.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdarg.h

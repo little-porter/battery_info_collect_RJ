@@ -1,6 +1,6 @@
 .\objects\gxht30.o: Hardware\gxht30.c
 .\objects\gxht30.o: Hardware\gxht30.h
-.\objects\gxht30.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\gxht30.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\gxht30.o: Hardware\i2c_gpio.h
 .\objects\gxht30.o: .\CMSIS\stm32f30x.h
 .\objects\gxht30.o: .\CMSIS\core_cm4.h
@@ -35,6 +35,6 @@
 .\objects\gxht30.o: .\Lib\inc\stm32f30x_wwdg.h
 .\objects\gxht30.o: .\Lib\inc\stm32f30x_misc.h
 .\objects\gxht30.o: .\App\mcu_init.h
-.\objects\gxht30.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\gxht30.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\gxht30.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\gxht30.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
 .\objects\gxht30.o: .\App\main.h

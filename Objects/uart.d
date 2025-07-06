@@ -1,8 +1,8 @@
 .\objects\uart.o: Hardware\uart.c
 .\objects\uart.o: Hardware\uart.h
 .\objects\uart.o: .\System\system.h
-.\objects\uart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\uart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\uart.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\uart.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\uart.o: .\CMSIS\stm32f30x.h
 .\objects\uart.o: .\CMSIS\core_cm4.h
 .\objects\uart.o: .\CMSIS\core_cmInstr.h
@@ -36,4 +36,4 @@
 .\objects\uart.o: .\Lib\inc\stm32f30x_wwdg.h
 .\objects\uart.o: .\Lib\inc\stm32f30x_misc.h
 .\objects\uart.o: Hardware\modbus.h
-.\objects\uart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\uart.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h

@@ -1,8 +1,8 @@
 .\objects\timer.o: Hardware\timer.c
 .\objects\timer.o: Hardware\timer.h
 .\objects\timer.o: .\System\system.h
-.\objects\timer.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\timer.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\timer.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\timer.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\timer.o: .\CMSIS\stm32f30x.h
 .\objects\timer.o: .\CMSIS\core_cm4.h
 .\objects\timer.o: .\CMSIS\core_cmInstr.h

@@ -575,11 +575,6 @@
               <FilePath>.\Hardware\dac.c</FilePath>
             </File>
             <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\usart.c</FilePath>
-            </File>
-            <File>
               <FileName>GZP6816D.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\GZP6816D.c</FilePath>
@@ -618,6 +613,11 @@
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fft.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\fft.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,8 +1,8 @@
 .\objects\led.o: Hardware\led.c
 .\objects\led.o: Hardware\led.h
 .\objects\led.o: .\System\system.h
-.\objects\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\led.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\led.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\led.o: .\CMSIS\stm32f30x.h
 .\objects\led.o: .\CMSIS\core_cm4.h
 .\objects\led.o: .\CMSIS\core_cmInstr.h

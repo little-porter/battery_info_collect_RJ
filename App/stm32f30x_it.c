@@ -197,10 +197,10 @@ void TIM1_UP_TIM16_IRQHandler(void)
 		static uint8_t j = 0,i = 0;
 		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
 
-		_V.data = (adc2_val[1] - adc2_val[2]) * 101.0f * 3.3f / 4096.f;
-		filteredData2 = movingAverageFilter(_V.data, BuffWindow, &index2, &sum2,&windwosbuffman2);
-		usRegInputBuf[2] = _V.buff[1];
-		usRegInputBuf[3] = _V.buff[0];
+//		_V.data = (adc2_val[1] - adc2_val[2]) * 101.0f * 3.3f / 4096.f;
+//		filteredData2 = movingAverageFilter(_V.data, BuffWindow, &index2, &sum2,&windwosbuffman2);
+//		usRegInputBuf[2] = _V.buff[1];
+//		usRegInputBuf[3] = _V.buff[0];
 	}
 }
 
@@ -248,59 +248,7 @@ void DMA1_Channel3_IRQHandler(void)
 
 void USART1_IRQHandler(void)
 {
-	uint16_t crc16 = 0;
-	uint8_t tmp = 0;
 	
-	USART_ClearITPendingBit(USART1, USART_IT_ORE);
-	//发生接收中断
-	if(USART_GetITStatus(USART1, USART_IT_RXNE) == SET)
-	{
-    //清除中断标志位    
-		USART_ClearITPendingBit(USART1, USART_IT_RXNE);   
-		tmp = USART_ReceiveData(USART1); 
-		uart1_rx_st.data[uart1_rx_st.now_Count++] = USART_ReceiveData(USART1); 
-		uart1_rx_st.now_Count %= UART_RX_BUF_LEN;
-	}
-	
-	if(USART_GetITStatus(USART1, USART_IT_IDLE) == SET)
-	{
-		//清除中断标志
-		USART_ClearITPendingBit(USART1, USART_IT_IDLE);
-		USART_ReceiveData(USART1);
-		
-		
-		if(uart1_rx_st.data[0] == SlaveAddress)
-		{
-			crc16 = getcrc16(uart1_rx_st.data,uart1_rx_st.now_Count-2);
-			if(((crc16 >> 8) == uart1_rx_st.data[uart1_rx_st.now_Count -2]) && ((crc16 & 0x00ff) == uart1_rx_st.data[uart1_rx_st.now_Count -1]))
-			{
-				ModBusDeal_uart1(uart1_rx_st.data,uart1_rx_st.now_Count);
-			}
-		}
-		uart1_rx_st.now_Count = 0;
-	}
-	
-
-//	//发生完成中断
-//	if(USART_GetITStatus(USART1, USART_IT_TC) == SET)
-//	{
-//		//清除中断标志
-//		USART_ClearITPendingBit(USART1, USART_IT_TC);
-//		
-//		if(uart1_tx_struct.buflen[uart1_tx_struct.now_Count] != 0)
-//		{
-//			USART_SendData(USART1, uart1_tx_struct.bufDate[uart1_tx_struct.now_Count][uart1_tx_struct.SendIndex[uart1_tx_struct.now_Count]]);
-//			uart1_tx_struct.SendIndex[uart1_tx_struct.now_Count]++;
-//			uart1_tx_struct.buflen[uart1_tx_struct.now_Count]--;
-//		}
-//		if(uart1_tx_struct.buflen[uart1_tx_struct.now_Count] == 0)
-//		{
-////			USART_ITConfig(USART1, USART_IT_TC, ENABLE);
-////			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-//			uart1_tx_struct.now_Count++;
-//			uart1_tx_struct.now_Count %= 20;
-//		}
-//  }
 }
 
 

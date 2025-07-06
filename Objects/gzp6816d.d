@@ -1,10 +1,10 @@
 .\objects\gzp6816d.o: Hardware\GZP6816D.c
 .\objects\gzp6816d.o: Hardware\GZP6816D.h
 .\objects\gzp6816d.o: .\App\stdint.h
-.\objects\gzp6816d.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\gzp6816d.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
 .\objects\gzp6816d.o: .\CMSIS\stm32f30x.h
 .\objects\gzp6816d.o: .\CMSIS\core_cm4.h
-.\objects\gzp6816d.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\gzp6816d.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\gzp6816d.o: .\CMSIS\core_cmInstr.h
 .\objects\gzp6816d.o: .\CMSIS\core_cmFunc.h
 .\objects\gzp6816d.o: .\CMSIS\core_cmSimd.h
@@ -35,6 +35,6 @@
 .\objects\gzp6816d.o: .\Lib\inc\stm32f30x_usart.h
 .\objects\gzp6816d.o: .\Lib\inc\stm32f30x_wwdg.h
 .\objects\gzp6816d.o: .\Lib\inc\stm32f30x_misc.h
-.\objects\gzp6816d.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\gzp6816d.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\gzp6816d.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\gzp6816d.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\math.h
 .\objects\gzp6816d.o: .\App\main.h

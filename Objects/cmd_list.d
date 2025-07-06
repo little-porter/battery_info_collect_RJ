@@ -1,11 +1,11 @@
 .\objects\cmd_list.o: Console\cmd_list.c
 .\objects\cmd_list.o: Console\serial.h
 .\objects\cmd_list.o: Console\fifo.h
-.\objects\cmd_list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\cmd_list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\cmd_list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\cmd_list.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\cmd_list.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\cmd_list.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
 .\objects\cmd_list.o: .\App\stdint.h
-.\objects\cmd_list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\cmd_list.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\cmd_list.o: Console\cmd_list.h
 .\objects\cmd_list.o: Console\console.h
-.\objects\cmd_list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\cmd_list.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdarg.h

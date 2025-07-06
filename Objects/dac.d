@@ -1,8 +1,8 @@
 .\objects\dac.o: Hardware\dac.c
 .\objects\dac.o: Hardware\dac.h
 .\objects\dac.o: .\System\system.h
-.\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\dac.o: .\CMSIS\stm32f30x.h
 .\objects\dac.o: .\CMSIS\core_cm4.h
 .\objects\dac.o: .\CMSIS\core_cmInstr.h
@@ -36,4 +36,4 @@
 .\objects\dac.o: .\Lib\inc\stm32f30x_wwdg.h
 .\objects\dac.o: .\Lib\inc\stm32f30x_misc.h
 .\objects\dac.o: .\App\stdint.h
-.\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\math.h

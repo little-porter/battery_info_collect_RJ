@@ -6,35 +6,38 @@
 
 
 #pragma pack(1)
-typedef struct
+
+typedef union _gas_float
 {
-	uint16_t  saveFlag;
-	FloatType H2K;
-	FloatType H2B;
-	FloatType COK;
-	FloatType COB;
-	
-}GAS_PARA;   //气体参数
+	float f_data;
+	uint16_t u8_data;
+}gas_float_t;
 
-typedef struct
+
+
+typedef struct _gas_ratio
+{
+	float k;
+	float b;
+}gas_ratio_t;
+
+typedef struct _gas_param
+{
+	uint8_t     save_flag;
+	gas_ratio_t CO;
+	gas_ratio_t H2;
+}gas_param_t;
+
+typedef struct _gas_info
 {
 	
-	FloatType h2;
-	FloatType co;
-	FloatType smoke;
-
-}GAS_INFO;   //气体信息
-
-
-typedef struct
-{
-	GAS_PARA para;
-	GAS_INFO value;
-	
-}GAS_ST;   
+	gas_param_t param;
+	float 		h2;
+	float 		co;
+	float       smoke;
+}gas_info_t;
 #pragma pack()
 
-extern GAS_ST gas_st;
 
 void gas_init(void);
 void gas_task(void);

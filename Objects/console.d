@@ -1,10 +1,10 @@
 .\objects\console.o: Console\console.c
-.\objects\console.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\console.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\console.o: Console\serial.h
 .\objects\console.o: Console\fifo.h
-.\objects\console.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\console.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\console.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\console.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
 .\objects\console.o: .\App\stdint.h
-.\objects\console.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\console.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\console.o: Console\console.h
-.\objects\console.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\objects\console.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdarg.h

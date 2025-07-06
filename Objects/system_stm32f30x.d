@@ -1,7 +1,7 @@
 .\objects\system_stm32f30x.o: CMSIS\system_stm32f30x.c
 .\objects\system_stm32f30x.o: CMSIS\stm32f30x.h
 .\objects\system_stm32f30x.o: CMSIS\core_cm4.h
-.\objects\system_stm32f30x.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\system_stm32f30x.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\system_stm32f30x.o: .\CMSIS\core_cmInstr.h
 .\objects\system_stm32f30x.o: .\CMSIS\core_cmFunc.h
 .\objects\system_stm32f30x.o: .\CMSIS\core_cmSimd.h

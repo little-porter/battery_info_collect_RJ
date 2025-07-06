@@ -1,7 +1,7 @@
 .\objects\system.o: System\system.c
 .\objects\system.o: System\system.h
-.\objects\system.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\system.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\system.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\system.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\system.o: .\CMSIS\stm32f30x.h
 .\objects\system.o: .\CMSIS\core_cm4.h
 .\objects\system.o: .\CMSIS\core_cmInstr.h
