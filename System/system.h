@@ -4,15 +4,16 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "stm32f30x.h"
+#include "sysTask.h"
 
 
 #define private
 #define public
 
 
-#define NULL	((void *)(0))
 
 //typedef enum _BOOL{false=0,true=1}bool;
 

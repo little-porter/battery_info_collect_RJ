@@ -22,11 +22,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f30x_it.h"
-#include "mcu_init.h"
+
 #include "stdint.h"
 #include "string.h"
 #include "adc.h"
-#include "usart.h"
+
 #include "main.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -48,7 +48,6 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern __IO uint32_t TimingDelay;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -151,7 +150,6 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-	TimingDelay--;
 	system_incTick();
 }
 
@@ -171,84 +169,21 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-uint8_t sr_count = 0,lock = 0,ccc = 0;
-uint16_t adc_value;
-uint16_t adc11_value[3];
 
-uint16_t max,min,dt_v;
-static bool adc_flag = true;
-static bool dma_flag = true;
-static bool AdcStartFlag = false;
-extern uint8_t  V_flag;
-
-
-extern float V;
-double BuffWindow[10];
-int index2 = 0;
-double sum2 = 0.0;
-double filteredData2;
-uint8_t windwosbuffman2 = 0;
 
 //º∆À„µÁ≥ÿµÁ—π
 void TIM1_UP_TIM16_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)
 	{
-		static uint8_t j = 0,i = 0;
-		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+//		static uint8_t j = 0,i = 0;
+//		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
 
 //		_V.data = (adc2_val[1] - adc2_val[2]) * 101.0f * 3.3f / 4096.f;
 //		filteredData2 = movingAverageFilter(_V.data, BuffWindow, &index2, &sum2,&windwosbuffman2);
 //		usRegInputBuf[2] = _V.buff[1];
 //		usRegInputBuf[3] = _V.buff[0];
 	}
-}
-
-uint16_t ass[FFT_COUNT];
-void DMA1_Channel1_IRQHandler(void)
-{
-	if(DMA_GetITStatus(DMA1_IT_TC1) != RESET)
-	{
-		DMA_ClearITPendingBit(DMA1_IT_TC1);
-		static uint8_t f_count = 0;
-		f_count++;
-		if((f_count == FFT_COUNT) && (dma_flag == true))
-		{
-			fft_flag = 1;
-		}
-		f_count %= FFT_COUNT;
-
-		ADC_StopConversion(ADC1);
-		DMA_Cmd(DMA1_Channel1,DISABLE);
-		DMA_SetCurrDataCounter(DMA1_Channel1,FFT_COUNT);
-      
-		DMA_Cmd(DMA1_Channel3,DISABLE);
-		DMA_SetCurrDataCounter(DMA1_Channel3,FFT_COUNT);
-		DMA_Cmd(DMA1_Channel3,ENABLE);
-      
-		DMA_Cmd(DMA1_Channel1,ENABLE);
-		ADC_StartConversion(ADC1);
-   
-	}
-}
-
-void DMA1_Channel3_IRQHandler(void)
-{
-	if(DMA_GetITStatus(DMA1_IT_TC3) != RESET)
-	{
-		DMA_ClearITPendingBit(DMA1_IT_TC3);
-		DMA_Cmd(DMA1_Channel3,DISABLE);
-		DMA_SetCurrDataCounter(DMA1_Channel3,FFT_COUNT);
-		DMA_Cmd(DMA1_Channel3,ENABLE);
-
-	}
-}
-
-
-
-void USART1_IRQHandler(void)
-{
-	
 }
 
 

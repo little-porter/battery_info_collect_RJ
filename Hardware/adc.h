@@ -5,7 +5,6 @@
 #include "string.h"
 #include "math.h"
 #include "main.h"
-#include "usart.h"
 #include "config.h"
 
 #include "system.h"
@@ -22,14 +21,18 @@ typedef struct {
 extern Complex input[FFT_COUNT];
 
 extern uint16_t sr_100[100];
-extern uint8_t  fft_flag;
 
-extern uint16_t adc1_val[FFT_COUNT],adc2_val[3],adc3_val[FFT_COUNT];
 extern FloatType h2float,cofloat,smokefloat;
 extern uint16_t ad1_dy[3],ad2_dy[3];
 
 
 
 void adc_init(void);
+
+
+uint16_t get_adc4_value(void);			
+uint16_t get_smoke_ad_value(void);
+uint16_t get_h2_ad_value(void);
+uint16_t get_co_ad_value(void);
 
 #endif

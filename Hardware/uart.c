@@ -103,11 +103,14 @@ void uart2_init(void)
 
 void USART2_IRQHandler(void)
 {
+	if(USART_GetITStatus(USART2, USART_IT_ORE) == SET){
+		USART_ClearITPendingBit(USART2, USART_IT_ORE);
+//		USART_ReceiveData(USART2);
+//		uart2_rx_fifo.length = 0;
+	}
 	
-	USART_ClearITPendingBit(USART2, USART_IT_ORE);
-	
-	if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET)							//发生接收中断
-	{
+	//发生接收中断
+	if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET){
 		//清除中断标志位    
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);   
 		uart2_rx_fifo.data[uart2_rx_fifo.length] = USART_ReceiveData(USART2);
@@ -115,8 +118,7 @@ void USART2_IRQHandler(void)
 		uart2_rx_fifo.length %= DATA_FIFO_SIZE;
 	}
 	
-	if(USART_GetITStatus(USART2, USART_IT_IDLE) == SET)
-	{
+	if(USART_GetITStatus(USART2, USART_IT_IDLE) == SET){
 		//清除中断标志
 		USART_ClearITPendingBit(USART2, USART_IT_IDLE);
 		USART_ReceiveData(USART2);
@@ -130,6 +132,7 @@ void USART2_IRQHandler(void)
 	{
 		//清除中断标志
 		USART_ClearITPendingBit(USART2, USART_IT_TC);
+		
 	}
 }
 

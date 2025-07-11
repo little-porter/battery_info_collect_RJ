@@ -7,7 +7,7 @@
 
 
 void led_init(void);
-void led_task_handler(void);
+void led_task(void);
 
 
 #endif

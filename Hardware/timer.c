@@ -74,7 +74,17 @@ void timer1_config(void)
 
 void timer2_config(void)
 {
+	TIM_DeInit(TIM2);
 	TIM_TimeBaseInitTypeDef    TIM_TimeBaseStructure;
+	NVIC_InitTypeDef NVIC_InitStructure; 
+		
+    
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);					// 设置中断组为0		
+    NVIC_InitStructure.NVIC_IRQChannel 	= TIM2_IRQn ;				// 设置中断来源
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		// 设置主优先级为 0 
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				// 设置抢占优先级为3
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
   
 	/* TIM2 Periph clock enable */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
@@ -82,32 +92,36 @@ void timer2_config(void)
   
 	/* Time base configuration */
 	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure); 
-	TIM_TimeBaseStructure.TIM_Period = 1125-1;          
+	TIM_TimeBaseStructure.TIM_Period = 562;					//1125-1;          
 	TIM_TimeBaseStructure.TIM_Prescaler = 1-1;       
-	TIM_TimeBaseStructure.TIM_ClockDivision = 0x0;    
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;    
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; 
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 
-	TIM_PrescalerConfig(TIM2, 0, TIM_PSCReloadMode_Update);
+//	TIM_PrescalerConfig(TIM2, 0, TIM_PSCReloadMode_Update);
 
 	/* TIM2 TRGO selection */
 	TIM_SelectOutputTrigger(TIM2, TIM_TRGOSource_Update);
   
-	//TIM_ClearFlag(TIM2, TIM_FLAG_Update);
-	//TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
+	
+//	TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
+//	TIM_ITConfig(TIM2,TIM_IT_CC1,ENABLE);
+//	TIM_ITConfig(TIM2,TIM_IT_CC2,ENABLE);
+//	TIM_ITConfig(TIM2,TIM_IT_CC3,ENABLE);
+//	TIM_ITConfig(TIM2,TIM_IT_CC4,ENABLE);
 	
 	/* TIM2 enable counter */
   
-	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
+//	GPIO_InitTypeDef GPIO_InitStructure;
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+//	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+//	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	// 将PB10连接到TIM2_CH3
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_10); 			// 根据具体型号，可能需要调整GPIO_AF_x的值
+//	// 将PB10连接到TIM2_CH3
+//	GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_10); 			// 根据具体型号，可能需要调整GPIO_AF_x的值
 	
 	
 	
@@ -123,6 +137,7 @@ void timer2_config(void)
 	TIM_OC2Init(TIM2,&TIM_OCInitStructure);
 	
 	TIM_Cmd(TIM2, ENABLE);
+	TIM_ClearFlag(TIM2, TIM_FLAG_Update|TIM_FLAG_CC1|TIM_FLAG_CC2|TIM_FLAG_CC3|TIM_FLAG_CC4);
 }
 
 
@@ -134,6 +149,13 @@ void timer_init(void)
 //	timer3_config();
 }
 
-
+void TIM2_IRQHandler(void)
+{
+//	TIM_ClearFlag(TIM2, TIM_FLAG_Update|TIM_FLAG_CC1|TIM_FLAG_CC2|TIM_FLAG_CC3|TIM_FLAG_CC4);
+	if(TIM_GetFlagStatus(TIM2,TIM_FLAG_Update))
+	{
+		TIM_ClearFlag(TIM2, TIM_FLAG_Update);
+	}	
+}
 
 

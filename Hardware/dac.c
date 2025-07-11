@@ -1,6 +1,6 @@
 #include "dac.h"
 
-#define DAC_REF		2047
+#define DAC_REF		2047					//2047		2482	1551  1240
 
 
 uint16_t sineWave1[SINE_WAVE_SAMPLES];
@@ -10,6 +10,22 @@ void generateSineWave(uint16_t *buff,uint16_t amplitude,uint16_t offset,uint16_t
 	for(int i = 0;i < samples;i++)
 	{
 		buff[i] = (uint16_t)(amplitude * sin(2 * M_PI * i / samples) + offset);
+	}
+}
+
+void generateSquareWave(uint16_t *buff,uint16_t amplitude,uint16_t offset,uint16_t samples)
+{
+	for(int i = 0;i < samples;i++)
+	{
+		if(i < samples/2)
+		{
+			buff[i] = offset+amplitude;
+			
+		}
+		else
+		{
+			buff[i] = offset - amplitude;
+		}
 	}
 }
 
@@ -35,10 +51,10 @@ void dac_dma_config(void)
 	DMA_InitTypeDef         DMA_InitStructure;
 	NVIC_InitTypeDef 		NVIC_InitStructure; 
 	
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
 	
 	/* DMA2 channel3 configuration */
-	DMA_DeInit(DMA1_Channel3); 
+	DMA_DeInit(DMA2_Channel3); 
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&DAC->DHR12R1;
 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&sineWave1[0];
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
@@ -47,25 +63,25 @@ void dac_dma_config(void)
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
 	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
 	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-	DMA_Init(DMA1_Channel3, &DMA_InitStructure);
+	DMA_Init(DMA2_Channel3, &DMA_InitStructure);
 	
-	SYSCFG_DMAChannelRemapConfig(SYSCFG_DMARemap_TIM6DAC1Ch1,ENABLE);
-	SYSCFG_DMAChannelRemapConfig(SYSCFG_DMARemap_TIM7DAC1Ch2,ENABLE);
+//	SYSCFG_DMAChannelRemapConfig(SYSCFG_DMARemap_TIM6DAC1Ch1,ENABLE);
+//	SYSCFG_DMAChannelRemapConfig(SYSCFG_DMARemap_TIM7DAC1Ch2,ENABLE);
 	
-	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel3_IRQn;   	 
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	
-	DMA_ITConfig(DMA1_Channel3,DMA_IT_TC,ENABLE);
+//	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel3_IRQn;   	 
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
+//	
+//	DMA_ITConfig(DMA1_Channel3,DMA_IT_TC,ENABLE);
    
 
 	/* Enable DMA2 Channel3 */
-	DMA_Cmd(DMA1_Channel3, ENABLE);
+	DMA_Cmd(DMA2_Channel3, ENABLE);
    
 }
 
@@ -101,8 +117,8 @@ void dac_config(void)
 	/* Escalator Wave generator ----------------------------------------*/
 
 	/* DAC channel1 Configuration */
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_T2_TRGO;
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_Triangle;
+	DAC_InitStructure.DAC_Trigger = DAC_Trigger_None;
+	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
 	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_LFSRUnmask_Bit0;
 	DAC_InitStructure.DAC_Buffer_Switch = DAC_BufferSwitch_Enable;;
 	DAC_Init(DAC1, DAC_Channel_2, &DAC_InitStructure);
@@ -117,7 +133,8 @@ void dac_config(void)
 
 void dac_init(void)
 {
-	generateSineWave(sineWave1,620,DAC_REF,128);
+//	generateSineWave(sineWave1,32,DAC_REF,128);
+	generateSquareWave(sineWave1,310,DAC_REF,128);
 	dac_gpio_config();
 	dac_config();
 	dac_dma_config();

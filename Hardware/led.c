@@ -52,7 +52,7 @@ void led_init(void)
 	led_off();
 }
 
-void led_task(void *param)
+void led_task_callback(void *param)
 {
 	static uint8_t led_flag = 0;
 	if(led_flag == 0){
@@ -64,7 +64,7 @@ void led_task(void *param)
 	}
 }
 
-void led_task_handler(void)
+void led_task(void)
 {
 	static uint32_t start_time = 0,time = 500;
 	static uint8_t  start_flag = 0;
@@ -76,7 +76,7 @@ void led_task_handler(void)
 	
 	if(system_timer_triggered(start_time,time)){
 		start_flag = 0;
-		sysTask_publish(led_task,NULL);
+		sysTask_publish(led_task_callback,NULL);
 	}
 }
 

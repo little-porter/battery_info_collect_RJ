@@ -1,0 +1,14 @@
+.\output\objects\modbus.o: Hardware\modbus.c
+.\output\objects\modbus.o: Hardware\modbus.h
+.\output\objects\modbus.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\modbus.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\output\objects\modbus.o: Hardware\gas.h
+.\output\objects\modbus.o: .\App\config.h
+.\output\objects\modbus.o: .\App\stdint.h
+.\output\objects\modbus.o: .\Console\serial.h
+.\output\objects\modbus.o: .\Console\fifo.h
+.\output\objects\modbus.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\output\objects\modbus.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\modbus.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\modbus.o: .\Console\console.h
+.\output\objects\modbus.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

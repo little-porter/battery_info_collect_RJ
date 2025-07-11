@@ -10,6 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARMCC</pArmCC>
       <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
@@ -48,14 +49,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>cjtl</OutputName>
+          <OutputDirectory>.\Output\Objects\</OutputDirectory>
+          <OutputName>battery_info_collect</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\Listings\</ListingPath>
+          <ListingPath>.\Output\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -190,7 +191,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -395,24 +396,9 @@
               <FilePath>.\App\stm32f30x_it.c</FilePath>
             </File>
             <File>
-              <FileName>mcu_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\App\mcu_init.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cortexM4lf_math.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>.\App\arm_cortexM4lf_math.lib</FilePath>
-            </File>
-            <File>
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\App\config.h</FilePath>
-            </File>
-            <File>
-              <FileName>gas.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\App\gas.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -450,11 +436,6 @@
               <FilePath>.\Lib\src\stm32f30x_comp.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f30x_crc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_crc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f30x_dac.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Lib\src\stm32f30x_dac.c</FilePath>
@@ -470,34 +451,14 @@
               <FilePath>.\Lib\src\stm32f30x_dma.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f30x_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_exti.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f30x_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Lib\src\stm32f30x_flash.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f30x_fmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_fmc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f30x_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Lib\src\stm32f30x_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f30x_hrtim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_hrtim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f30x_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_i2c.c</FilePath>
             </File>
             <File>
               <FileName>stm32f30x_iwdg.c</FileName>
@@ -523,16 +484,6 @@
               <FileName>stm32f30x_rcc.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Lib\src\stm32f30x_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f30x_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f30x_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\src\stm32f30x_spi.c</FilePath>
             </File>
             <File>
               <FileName>stm32f30x_syscfg.c</FileName>
@@ -565,34 +516,9 @@
               <FilePath>.\Hardware\adc.c</FilePath>
             </File>
             <File>
-              <FileName>can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\can.c</FilePath>
-            </File>
-            <File>
               <FileName>dac.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\dac.c</FilePath>
-            </File>
-            <File>
-              <FileName>GZP6816D.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\GZP6816D.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\i2c_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxht30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\gxht30.c</FilePath>
-            </File>
-            <File>
-              <FileName>flash_bsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\flash_bsp.c</FilePath>
             </File>
             <File>
               <FileName>led.c</FileName>
@@ -615,9 +541,44 @@
               <FilePath>.\Hardware\uart.c</FilePath>
             </File>
             <File>
-              <FileName>fft.c</FileName>
+              <FileName>si2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\fft.c</FilePath>
+              <FilePath>.\Hardware\si2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>GXHTC3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\GXHTC3.c</FilePath>
+            </File>
+            <File>
+              <FileName>crc8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\crc8.c</FilePath>
+            </File>
+            <File>
+              <FileName>NTC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\NTC.c</FilePath>
+            </File>
+            <File>
+              <FileName>average_filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\average_filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>gas.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\gas.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>battery_info.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\battery_info.c</FilePath>
             </File>
           </Files>
         </Group>
