@@ -7,6 +7,7 @@
 
 #pragma pack(1)
 
+
 typedef enum _gas_process
 {
 	GAS_INIT = 0,
@@ -17,7 +18,7 @@ typedef enum _gas_process
 typedef union _gas_float
 {
 	float f_data;
-	uint16_t u8_data;
+	uint16_t u16_data[2];
 }gas_float_t;
 
 
@@ -55,5 +56,6 @@ typedef struct _gas_info
 void gas_init(void);
 void gas_task(void);
 void gas_param_save_flag_set(void);
+void gas_param_set(uint16_t *reg);
 
 #endif

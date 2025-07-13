@@ -53,9 +53,6 @@ void uart2_config(void)
 	
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
-
-    
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
   
 	/* 配置中断源 */
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
@@ -103,11 +100,12 @@ void uart2_init(void)
 
 void USART2_IRQHandler(void)
 {
-	if(USART_GetITStatus(USART2, USART_IT_ORE) == SET){
-		USART_ClearITPendingBit(USART2, USART_IT_ORE);
+	USART_ClearITPendingBit(USART2, USART_IT_ORE);
+//	if(USART_GetITStatus(USART2, USART_IT_ORE) == SET){
+//		USART_ClearITPendingBit(USART2, USART_IT_ORE);
 //		USART_ReceiveData(USART2);
 //		uart2_rx_fifo.length = 0;
-	}
+//	}
 	
 	//发生接收中断
 	if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET){
@@ -122,7 +120,7 @@ void USART2_IRQHandler(void)
 		//清除中断标志
 		USART_ClearITPendingBit(USART2, USART_IT_IDLE);
 		USART_ReceiveData(USART2);
-		modbus_msg_deal_handler(uart2_rx_fifo.data,uart2_rx_fifo.length);
+//		modbus_msg_deal_handler(uart2_rx_fifo.data,uart2_rx_fifo.length);
 		uart2_rx_fifo.length = 0;	
 	}
 	

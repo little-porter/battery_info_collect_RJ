@@ -1,9 +1,9 @@
 .\output\objects\led.o: Hardware\led.c
 .\output\objects\led.o: Hardware\led.h
 .\output\objects\led.o: .\System\system.h
-.\output\objects\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\led.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\led.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\led.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\led.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\led.o: .\CMSIS\stm32f30x.h
 .\output\objects\led.o: .\CMSIS\core_cm4.h
 .\output\objects\led.o: .\CMSIS\core_cmInstr.h

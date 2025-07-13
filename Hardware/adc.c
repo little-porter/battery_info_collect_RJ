@@ -85,8 +85,8 @@ void adc3_dma2_ch5_config(void)
 	
 	
 	NVIC_InitStructure.NVIC_IRQChannel = DMA2_Channel5_IRQn;   	 
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 	
@@ -124,7 +124,7 @@ void adc4_dma2_ch2_config(void)
 //	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 //	NVIC_Init(&NVIC_InitStructure);
 	
-	DMA_ITConfig(DMA2_Channel2,DMA_IT_TC,ENABLE);
+//	DMA_ITConfig(DMA2_Channel2,DMA_IT_TC,ENABLE);
 	
 	DMA_Init(DMA2_Channel2, &DMA_InitStructure); 
 }

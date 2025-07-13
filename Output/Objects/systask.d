@@ -1,9 +1,9 @@
 .\output\objects\systask.o: System\sysTask.c
 .\output\objects\systask.o: System\sysTask.h
 .\output\objects\systask.o: System\system.h
-.\output\objects\systask.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\systask.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\systask.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\systask.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\systask.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\systask.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\systask.o: .\CMSIS\stm32f30x.h
 .\output\objects\systask.o: .\CMSIS\core_cm4.h
 .\output\objects\systask.o: .\CMSIS\core_cmInstr.h

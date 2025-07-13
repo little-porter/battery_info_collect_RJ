@@ -1,8 +1,8 @@
 .\output\objects\system.o: System\system.c
 .\output\objects\system.o: System\system.h
-.\output\objects\system.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\system.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\system.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\system.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\system.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\system.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\system.o: .\CMSIS\stm32f30x.h
 .\output\objects\system.o: .\CMSIS\core_cm4.h
 .\output\objects\system.o: .\CMSIS\core_cmInstr.h

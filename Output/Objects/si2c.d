@@ -1,9 +1,9 @@
 .\output\objects\si2c.o: Hardware\si2c.c
 .\output\objects\si2c.o: Hardware\si2c.h
 .\output\objects\si2c.o: .\System\system.h
-.\output\objects\si2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\si2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\si2c.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\si2c.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\si2c.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\si2c.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\si2c.o: .\CMSIS\stm32f30x.h
 .\output\objects\si2c.o: .\CMSIS\core_cm4.h
 .\output\objects\si2c.o: .\CMSIS\core_cmInstr.h

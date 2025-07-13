@@ -42,35 +42,57 @@ void gas_param_save_flag_reset(void)
 	gas_info.param.save_flag = 0;
 }
 
-//void gas_param_save(void)
-//{
-//	if(1 == gas_info.param.save_flag)
-//	{
-//		/*保存参数*/
-//		gas_param_t read_param = {0};
-//		uint8_t *data = (uint8_t *)&gas_info.param;
-//		uint16_t len = sizeof(gas_param_t);
-//		while(!memcmp(&read_param,&gas_info.param,sizeof(gas_param_t))){
-//			flash_pages_erase(GAS_PARAM_SAVE_ADDR,1);
-//			flash_write_data(GAS_PARAM_SAVE_ADDR,data,len);
-//			flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&read_param,sizeof(gas_param_t));
-//		}
-//	}
+void gas_param_set(uint16_t *reg)
+{
+	gas_float_t tem_ratio[4] = {0};
+	for(int i=0; i<8;i=i+2)
+	{
+		tem_ratio[i/2].u16_data[1] = (*(reg+i)>>8) | ((*(reg+i)&0xFF)<<8);
+		tem_ratio[i/2].u16_data[0] = (*(reg+i+1)>>8) | ((*(reg+i+1)&0xFF)<<8);
+	}	
+	gas_info.param.CO.k = tem_ratio[0].f_data;
+	gas_info.param.CO.b = tem_ratio[1].f_data;
+	gas_info.param.H2.k = tem_ratio[2].f_data;
+	gas_info.param.H2.b = tem_ratio[3].f_data;
+}
 
-//}
+void gas_param_save(void)
+{
+	if(1 == gas_info.param.save_flag)
+	{
+		/*保存参数*/
+		uint8_t reply = 3;
+		gas_param_t read_param = {0};
+		uint8_t *data = (uint8_t *)&gas_info.param;
+		uint16_t len = sizeof(gas_param_t);
+		while((0 != memcmp(&read_param,&gas_info.param,sizeof(gas_param_t))) && (reply--)){
+			flash_pages_erase(GAS_PARAM_SAVE_ADDR,1);
+			flash_write_data(GAS_PARAM_SAVE_ADDR,data,len);
+			flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&read_param,sizeof(gas_param_t));
+		}
+		gas_param_save_flag_reset();
+	}
+
+}
 
 void gas_param_init(void)
 {
-	
-//	flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&gas_info.param,sizeof(gas_param_t));
+	flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&gas_info.param,sizeof(gas_param_t));
 	if(gas_info.param.save_flag != 1){
 		gas_info.param.H2.k = 1;
 		gas_info.param.H2.b = 1;
 		gas_info.param.CO.k = 1;
 		gas_info.param.CO.b = 1;
+		gas_info.param.save_flag = 1;
+	}else{
+		gas_info.param.save_flag = 0;
+//		gas_info.param.H2.k = 1.5;
+//		gas_info.param.H2.b = 3;
+//		gas_info.param.CO.k = 1.1;
+//		gas_info.param.CO.b = 2;
 	}
 	
-//	gas_param_save();
+	gas_param_save();
 	
 	gas_info.co = 0;
 	gas_info.h2 = 0;
@@ -402,7 +424,7 @@ void gas_task_callback(void *param)
 	
 	gas_co_check_process();
 	
-//	gas_param_save();
+	gas_param_save();
 }
 /**************************************************************************************************************
 	气体检测任务，检测周期100ms

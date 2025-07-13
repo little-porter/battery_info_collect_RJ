@@ -1,7 +1,7 @@
 #include "system.h"
 
 /*pravate*/
-private uint32_t sysTime = 0;
+private volatile uint32_t sysTime = 0;
 
 
 void system_incTick(void)

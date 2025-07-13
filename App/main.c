@@ -32,6 +32,7 @@ void debug_task(void)
 int main(void)
 {
   	SysTick_Config(72000);
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	modbus_generate_crcTable();
 	sysTask_init();
 	led_init();

@@ -5,9 +5,7 @@ void timer3_config(void)
 {
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
-		
-    
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);					// 设置中断组为0		
+			
     NVIC_InitStructure.NVIC_IRQChannel 	= TIM3_IRQn ;				// 设置中断来源
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		// 设置主优先级为 0 
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				// 设置抢占优先级为3
@@ -42,8 +40,7 @@ void timer1_config(void)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
 		
-   
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);					// 设置中断组为0			
+   		
     NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_TIM16_IRQn ;		// 设置中断来源	
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		// 设置主优先级为 0 
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				// 设置抢占优先级为3
@@ -76,15 +73,14 @@ void timer2_config(void)
 {
 	TIM_DeInit(TIM2);
 	TIM_TimeBaseInitTypeDef    TIM_TimeBaseStructure;
-	NVIC_InitTypeDef NVIC_InitStructure; 
-		
-    
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);					// 设置中断组为0		
-    NVIC_InitStructure.NVIC_IRQChannel 	= TIM2_IRQn ;				// 设置中断来源
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		// 设置主优先级为 0 
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				// 设置抢占优先级为3
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStructure);
+//	NVIC_InitTypeDef NVIC_InitStructure; 
+//		
+//    	
+//    NVIC_InitStructure.NVIC_IRQChannel 	= TIM2_IRQn ;				// 设置中断来源
+//    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		// 设置主优先级为 0 
+//    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;				// 设置抢占优先级为3
+//    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//    NVIC_Init(&NVIC_InitStructure);
   
 	/* TIM2 Periph clock enable */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);

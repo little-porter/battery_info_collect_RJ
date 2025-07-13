@@ -1,9 +1,9 @@
 .\output\objects\flash.o: Hardware\flash.c
 .\output\objects\flash.o: Hardware\flash.h
 .\output\objects\flash.o: .\System\system.h
-.\output\objects\flash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\flash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\flash.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\flash.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\flash.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\flash.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\flash.o: .\CMSIS\stm32f30x.h
 .\output\objects\flash.o: .\CMSIS\core_cm4.h
 .\output\objects\flash.o: .\CMSIS\core_cmInstr.h

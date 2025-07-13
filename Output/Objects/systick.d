@@ -1,9 +1,9 @@
 .\output\objects\systick.o: System\systick.c
 .\output\objects\systick.o: System\systick.h
 .\output\objects\systick.o: System\system.h
-.\output\objects\systick.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\systick.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\systick.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\systick.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\systick.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\systick.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\systick.o: .\CMSIS\stm32f30x.h
 .\output\objects\systick.o: .\CMSIS\core_cm4.h
 .\output\objects\systick.o: .\CMSIS\core_cmInstr.h

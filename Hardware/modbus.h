@@ -10,6 +10,7 @@ void modbus_msg_deal_handler(uint8_t *data,uint16_t length);
 void uart_data_send(uint8_t *data,uint16_t len);
 
 void modbus_reg_write(uint16_t addr,uint16_t *data,uint16_t num);
+void modbus_reg_read(uint16_t addr,uint16_t *data,uint16_t num);
 
 
 #define CONFIG_REG_ADDR			0x0000

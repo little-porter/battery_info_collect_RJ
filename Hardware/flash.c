@@ -37,7 +37,7 @@ void flash_pages_erase(uint32_t addr,uint16_t page_num)
 {
 	uint16_t num = 0;
 	num = (addr-0x08000000)/2048 + page_num;
-	if(num > 63) return;
+	if(num > 128) return;
 	FLASH_Unlock();
 	for(int i=0; i<page_num; i++){
 		if (FLASH_ErasePage(addr)!= FLASH_COMPLETE){
@@ -72,10 +72,12 @@ uint8_t flash_write_data(uint32_t addr,uint8_t *data,uint16_t len)
 
 void flash_read_data(uint32_t addr,uint8_t *data,uint16_t len)
 {
+	FLASH_Unlock();
 	for(int i=0; i<len; i++)
 	{
 		data[i] = *(__IO uint8_t *)(addr+i);
 	}
+	FLASH_Lock();
 }
 
 

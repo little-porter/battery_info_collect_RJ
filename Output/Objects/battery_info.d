@@ -1,9 +1,9 @@
 .\output\objects\battery_info.o: Hardware\battery_info.c
 .\output\objects\battery_info.o: Hardware\battery_info.h
 .\output\objects\battery_info.o: .\System\system.h
-.\output\objects\battery_info.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\battery_info.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\battery_info.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\battery_info.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\battery_info.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\battery_info.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\battery_info.o: .\CMSIS\stm32f30x.h
 .\output\objects\battery_info.o: .\CMSIS\core_cm4.h
 .\output\objects\battery_info.o: .\CMSIS\core_cmInstr.h
@@ -32,4 +32,4 @@
 .\output\objects\battery_info.o: .\System\system.h
 .\output\objects\battery_info.o: Hardware\average_filter.h
 .\output\objects\battery_info.o: Hardware\modbus.h
-.\output\objects\battery_info.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\output\objects\battery_info.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h

@@ -16,7 +16,7 @@ uint16_t calibration_reg_table[REG_TABLE_LEN];
 #define  MODBUS_FUNCODE_IDX     1
 #define  REG_START_ADDR_IDX     2
 #define  REG_NUM_IDX            4
-#define  REG_DATA_IDX			5
+#define  REG_DATA_IDX			6
 #define  MODBUS_CRC_IDX         6
 
 #define  MODBUS_READ_CONFIG_REG_CMD        0x03
@@ -58,12 +58,14 @@ uint16_t modbus_calculate_crc(uint8_t *data,uint16_t length)
     return crc;
 }
 
-void modbus_reg_data_reverse(uint16_t *reg)
+void modbus_reg_data_reverse(uint16_t *reg,uint16_t num)
 {
 	uint16_t tem = 0;
-	uint16_t reg_data = *reg;
-	tem = ((reg_data>>8)&0xFF) | ((reg_data&0xFF)<<8);
-	*reg = tem;
+	for(int i=0; i<num; i++){
+		tem = ((*reg>>8)&0xFF) | ((*reg&0xFF)<<8);
+		*reg = tem;
+		reg++;
+	}
 }
 
 void modbus_reg_write(uint16_t addr,uint16_t *data,uint16_t num)
@@ -77,15 +79,40 @@ void modbus_reg_write(uint16_t addr,uint16_t *data,uint16_t num)
         write_reg = &result_reg_table[addr-0x2000];
     }else if(addr<0x4000){
         write_reg = &info_reg_table[addr-0x3000];
-    }else{
+    }else if(addr<0x5000){
+		write_reg = &calibration_reg_table[addr-0x4000];
+	}else{
         /* 非法地址 */
         return;
     }
     memcpy(write_reg,data,num*2); 
-	modbus_reg_data_reverse(write_reg);	
+	modbus_reg_data_reverse(write_reg,num*2);	
 }
 
-
+void modbus_reg_read(uint16_t addr,uint16_t *data,uint16_t num)
+{
+	if(num == 0)	return;
+	uint16_t *read_reg = NULL;
+	uint16_t temp_reg[REG_TABLE_LEN] = {0};
+    if(addr<0x1000){
+        read_reg = &config_reg_table[addr];
+    }else if(addr<0x2000){
+        read_reg = &data_reg_table[addr-0x1000];
+    }else if(addr<0x3000){
+        read_reg = &result_reg_table[addr-0x2000];
+    }else if(addr<0x4000){
+        read_reg = &info_reg_table[addr-0x3000];
+    }else if(addr<0x5000){
+		read_reg = &calibration_reg_table[addr-0x4000];
+	}else{
+        /* 非法地址 */
+        return;
+    }
+	
+	memcpy(temp_reg,read_reg,num*2);
+	modbus_reg_data_reverse(temp_reg,num*2);
+	memcpy(data,temp_reg,num*2);
+}
 
 
 
@@ -175,11 +202,7 @@ void modbus_write_ack(uint8_t cmd, uint16_t addr,uint16_t num,uint8_t *data)
 		/* 地址不可访问 */
         modbus_error_ask(cmd,0x04);
         return;
-	}else if(open_flag == 1)
-	{
-		/*设置校准系数保存标志*/
-		gas_param_save_flag_set();
-	}
+	}else{;}
 	
     memcpy(ack_reg,&data[REG_DATA_IDX],num*2);
 
@@ -195,6 +218,11 @@ void modbus_write_ack(uint8_t cmd, uint16_t addr,uint16_t num,uint8_t *data)
    
 
     uart_data_send(ack_msg,pos);
+	if(open_flag == 1){
+		/*设置校准系数保存标志*/
+		gas_param_set(&calibration_reg_table[1]);
+		gas_param_save_flag_set();
+	}
 
 }
 
@@ -202,6 +230,7 @@ void modbus_write_ack(uint8_t cmd, uint16_t addr,uint16_t num,uint8_t *data)
 void modbus_msg_deal_handler(uint8_t *data,uint16_t length)
 {
     uint16_t crc=0,cal_crc=0;
+	if(length > 100)	return;
     if(data[MODBUS_ADDR_IDX] != modbus_addr) return;
     crc = data[length-2] | data[length-1]<<8;
     cal_crc = modbus_calculate_crc(data,length-2);
