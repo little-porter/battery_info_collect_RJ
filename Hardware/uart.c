@@ -8,7 +8,10 @@ typedef struct _data_fifo
 {
 	uint8_t data[DATA_FIFO_SIZE];
 	uint16_t length;
+	uint8_t idle_flag;
 }data_fifo_t;
+
+
 
 
 data_fifo_t uart2_rx_fifo;
@@ -120,7 +123,7 @@ void USART2_IRQHandler(void)
 		//清除中断标志
 		USART_ClearITPendingBit(USART2, USART_IT_IDLE);
 		USART_ReceiveData(USART2);
-//		modbus_msg_deal_handler(uart2_rx_fifo.data,uart2_rx_fifo.length);
+		modbus_msg_deal_handler(uart2_rx_fifo.data,uart2_rx_fifo.length);
 		uart2_rx_fifo.length = 0;	
 	}
 	

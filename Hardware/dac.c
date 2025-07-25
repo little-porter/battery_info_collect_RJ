@@ -1,10 +1,14 @@
 #include "dac.h"
 
-#define DAC_REF		2047					//2047		2482	1551  1240
+#define DAC_REF			2047					//2047		2482	1551  1240
+#define DAC_WAVE_SIZE	WAVE_SAMPLES
+
+private uint16_t sineWave1[DAC_WAVE_SIZE];
 
 
-uint16_t sineWave1[SINE_WAVE_SAMPLES];
-
+/**************************************************************************************************************
+	产生模拟1KHZ正弦波
+**************************************************************************************************************/
 void generateSineWave(uint16_t *buff,uint16_t amplitude,uint16_t offset,uint16_t samples)
 {
 	for(int i = 0;i < samples;i++)
@@ -13,13 +17,16 @@ void generateSineWave(uint16_t *buff,uint16_t amplitude,uint16_t offset,uint16_t
 	}
 }
 
+/**************************************************************************************************************
+	生成模拟1KHZ方波
+**************************************************************************************************************/
 void generateSquareWave(uint16_t *buff,uint16_t amplitude,uint16_t offset,uint16_t samples)
 {
 	for(int i = 0;i < samples;i++)
 	{
 		if(i < samples/2)
 		{
-			buff[i] = offset+amplitude;
+			buff[i] = offset + amplitude;
 			
 		}
 		else
@@ -29,7 +36,9 @@ void generateSquareWave(uint16_t *buff,uint16_t amplitude,uint16_t offset,uint16
 	}
 }
 
-
+/**************************************************************************************************************
+	dac gpio初始化配置
+**************************************************************************************************************/
 void dac_gpio_config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -46,10 +55,13 @@ void dac_gpio_config(void)
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
+/**************************************************************************************************************
+	dac dma配置
+**************************************************************************************************************/
 void dac_dma_config(void)
 {
 	DMA_InitTypeDef         DMA_InitStructure;
-	NVIC_InitTypeDef 		NVIC_InitStructure; 
+//	NVIC_InitTypeDef 		NVIC_InitStructure; 
 	
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);
 	
@@ -58,7 +70,7 @@ void dac_dma_config(void)
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&DAC->DHR12R1;
 	DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&sineWave1[0];
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-	DMA_InitStructure.DMA_BufferSize = SINE_WAVE_SAMPLES;
+	DMA_InitStructure.DMA_BufferSize = DAC_WAVE_SIZE;
 	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
@@ -85,15 +97,13 @@ void dac_dma_config(void)
    
 }
 
-
+/**************************************************************************************************************
+	DAC 配置
+**************************************************************************************************************/
 void dac_config(void)
 {
-	
 	DAC_InitTypeDef            DAC_InitStructure;
 	
-	
-
-
 	/* DAC Periph clock enable */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC1, ENABLE);
 	
@@ -130,11 +140,13 @@ void dac_config(void)
 	
 }
 
-
+/**************************************************************************************************************
+	DAC 硬件初始化
+**************************************************************************************************************/
 void dac_init(void)
 {
 //	generateSineWave(sineWave1,32,DAC_REF,128);
-	generateSquareWave(sineWave1,310,DAC_REF,128);
+	generateSquareWave(sineWave1,310,DAC_REF,DAC_WAVE_SIZE);			//310 248
 	dac_gpio_config();
 	dac_config();
 	dac_dma_config();

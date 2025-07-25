@@ -25,8 +25,8 @@ void modbus_reg_read(uint16_t addr,uint16_t *data,uint16_t num);
 #define H2_REG_ADDR				0x1007
 #define SMOKE_REG_ADDR			0x1008
 #define	ENV_TEMP_REG_ADDR		0x1005
+#define	HUMIDITY_REG_ADDR		0x1009
 
-
-
+#define CAlIBRATE_REG_ADDR		0x4001
 
 #endif

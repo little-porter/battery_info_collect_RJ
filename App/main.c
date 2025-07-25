@@ -11,23 +11,9 @@
 #include "gas.h"
 #include "battery_info.h"
 
+#include "iap.h"
 
 
-#ifdef USE_DEBUG_MODULE	
-void debug_task(void)
-{
-	static uint16_t times=0;
-	
-	times++;
-	times%=200;
-	
-	if(!times)
-	{
-		port_printf(0,"\r\n");
-		
-	}
-}
-#endif		
 
 int main(void)
 {
@@ -39,14 +25,17 @@ int main(void)
 	dac_init();
 	adc_init();
 	timer_init();
-	uart2_init();
+	
 	gas_init();
 	
-	GXHTC3_device_init(&GXHTC3_device);
+	iap_init();
+	
+	uart2_init();
 	
 	while(1)
 	{
 		led_task();
+		led_change_task();
 		GXHTC3_task();
 		battery_info_task();
 		NTC_task();

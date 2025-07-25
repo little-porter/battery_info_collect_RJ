@@ -35,6 +35,7 @@
 ".\output\objects\flash.o"
 ".\output\objects\battery_info.o"
 ".\output\objects\iap.o"
+".\output\objects\app_info.o"
 ".\output\objects\cmd_list.o"
 ".\output\objects\console.o"
 ".\output\objects\fifo.o"

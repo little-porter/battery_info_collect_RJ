@@ -15,6 +15,16 @@
 
 
 
+#if USE_SINE
+	#define  WAVE_SAMPLES 		128
+	#define  T_DIV_FREQUENCY	562      //72MHz/128
+#else
+	#define  WAVE_SAMPLES 		200
+	#define  T_DIV_FREQUENCY   	360-1    //72MHZ/200
+#endif
+
+
+
 //typedef enum _BOOL{false=0,true=1}bool;
 
 

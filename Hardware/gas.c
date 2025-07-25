@@ -66,18 +66,45 @@ void gas_param_save(void)
 		uint8_t *data = (uint8_t *)&gas_info.param;
 		uint16_t len = sizeof(gas_param_t);
 		while((0 != memcmp(&read_param,&gas_info.param,sizeof(gas_param_t))) && (reply--)){
-			flash_pages_erase(GAS_PARAM_SAVE_ADDR,1);
-			flash_write_data(GAS_PARAM_SAVE_ADDR,data,len);
-			flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&read_param,sizeof(gas_param_t));
+//			flash_pages_erase(GAS_PARAM_SAVE_ADDR,1);
+//			flash_write_data(GAS_PARAM_SAVE_ADDR,data,len);
+//			flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&read_param,sizeof(gas_param_t));
 		}
 		gas_param_save_flag_reset();
 	}
 
 }
 
+void gas_param_modbus_reg_init(void)
+{
+	uint16_t temp_reg[8] = {0},temp;
+	memcpy(&temp_reg[0],&gas_info.param.CO.k,4);
+	memcpy(&temp_reg[2],&gas_info.param.CO.b,4);
+	memcpy(&temp_reg[4],&gas_info.param.H2.k,4);
+	memcpy(&temp_reg[6],&gas_info.param.H2.b,4);
+	temp = temp_reg[0];
+	temp_reg[0] = temp_reg[1];
+	temp_reg[1] = temp;
+	
+	temp = temp_reg[2];
+	temp_reg[2] = temp_reg[3];
+	temp_reg[3] = temp;
+	
+	temp = temp_reg[4];
+	temp_reg[4] = temp_reg[5];
+	temp_reg[5] = temp;
+	
+	temp = temp_reg[6];
+	temp_reg[6] = temp_reg[7];
+	temp_reg[7] = temp;
+	
+	modbus_reg_write(CAlIBRATE_REG_ADDR,temp_reg,8);
+}
+
+
 void gas_param_init(void)
 {
-	flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&gas_info.param,sizeof(gas_param_t));
+//	flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&gas_info.param,sizeof(gas_param_t));
 	if(gas_info.param.save_flag != 1){
 		gas_info.param.H2.k = 1;
 		gas_info.param.H2.b = 1;
@@ -93,6 +120,8 @@ void gas_param_init(void)
 	}
 	
 	gas_param_save();
+	gas_param_modbus_reg_init();
+	
 	
 	gas_info.co = 0;
 	gas_info.h2 = 0;
@@ -151,6 +180,7 @@ void gas_smoke_selfcheck(void)
 				selfcheck_process = 2;
 				gas_smoke_on();
 			}
+			break;
 		case 2:
 			smoke_ad = average_filter_uint16_calculate(smoke_ad,gas_smoke_fifo,&gas_smoke_fifo_index,GAS_SMOKE_FIFO_SIZE,&gas_smoke_calculate);
 			if(!gas_smoke_calculate)  return;
@@ -170,7 +200,9 @@ void gas_smoke_selfcheck(void)
 				gas_smoke_calculate = 0;
 				gas_smoke_fifo_index = 0;
 			}
+			break;
 		default:
+			selfcheck_process = 0;
 			break;
 		
 	}	
@@ -227,6 +259,7 @@ void gas_smoke_check_process(void)
 			gas_smoke_check();
 			break;
 		default:
+			gas_info.smoke_process = GAS_INIT;
 			break;
 		
 	}	
@@ -238,8 +271,10 @@ void gas_smoke_check_process(void)
 void gas_h2_init(void)
 {
 	gas_h2_fifo[gas_h2_fifo_index++] = get_h2_ad_value();
-	if(gas_h2_fifo_index == GAS_H2_FIFO_SIZE)			/*等待填满滑窗*/
+	if(gas_h2_fifo_index == GAS_H2_FIFO_SIZE){			/*等待填满滑窗*/
 		gas_info.h2_process = GAS_SELFCHECK;
+		gas_h2_fifo_index = 0;
+	}
 	gas_h2_fifo_index %= GAS_H2_FIFO_SIZE;
 }
 
@@ -255,7 +290,7 @@ void gas_h2_selfcheck(void)
 			max = gas_h2_fifo[i];
 		}
 		
-		if(min < gas_h2_fifo[i]){
+		if(min > gas_h2_fifo[i]){
 			min = gas_h2_fifo[i];
 		}
 		sum += gas_h2_fifo[i];
@@ -268,14 +303,14 @@ void gas_h2_selfcheck(void)
 	/*计算敏感电阻*/
 	float r = 0,max_r = 0, min_r = 0;
 	if(v)
-		r = (6.6f-2*v)/v;
+		r = (6.6f-2*v)/v;					/*h2_v/2 = 3.3/(2+r)*/
 	if(min_v)
-		max_r = (6.6f-2*max_v)/min_v;
+		max_r = (6.6f-2*max_v)/max_v;		/*h2_v/2 = 3.3/(2+r)*/
 	if(min_v)
-		min_r = (6.6f-2*min_v)/min_v;
+		min_r = (6.6f-2*min_v)/min_v;		/*h2_v/2 = 3.3/(2+r)*/
 	diff = max_r - min_r;
 	
-	if((diff < 5) && (r > 10)){				/*敏感电阻大于10k，且敏感电阻变化不大于5k自检合格*/
+	if((diff < 5) && (r > 5) && (v > 0.05f)){				/*敏感电阻大于10k，且敏感电阻变化不大于5k自检合格，电压值大于50mV（传感器不为开路状态）*/
 		gas_info.h2_process = GAS_CHECK;
 		gas_h2_fifo_index = 0;
 	}
@@ -291,7 +326,7 @@ void gas_h2_calculate(void)
 	if(h2_v)	
 		h2_r = (6.6f-2*h2_v)/h2_v;                  /*h2_v/2 = 3.3/(2+r)*/
 	float    h2 = (float)(gas_info.param.H2.k * pow(h2_r,gas_info.param.H2.b));
-	h2_ppm = (uint16_t)h2;
+	h2_ppm = (uint16_t)(h2*100);
 	gas_info.h2 = h2;
 	modbus_reg_write(H2_REG_ADDR,&h2_ppm,1);	
 }
@@ -311,6 +346,7 @@ void gas_h2_check_process(void)
 			gas_h2_calculate();
 			break;
 		default:
+			gas_info.h2_process = GAS_INIT;
 			break;
 		
 	}
@@ -321,8 +357,10 @@ void gas_h2_check_process(void)
 void gas_co_init(void)
 {
 	gas_co_fifo[gas_co_fifo_index++] = get_co_ad_value();
-	if(gas_co_fifo_index == GAS_CO_FIFO_SIZE)			/*填满滑窗*/
+	if(gas_co_fifo_index == GAS_CO_FIFO_SIZE){			/*填满滑窗*/
 		gas_info.co_process = GAS_SELFCHECK;
+		gas_co_fifo_index = 0;
+	}
 	gas_co_fifo_index %= GAS_CO_FIFO_SIZE;
 }
 
@@ -338,7 +376,7 @@ void gas_co_selfcheck(void)
 			max = gas_co_fifo[i];
 		}
 		
-		if(min < gas_co_fifo[i]){
+		if(min > gas_co_fifo[i]){
 			min = gas_co_fifo[i];
 		}
 		sum += gas_co_fifo[i];
@@ -351,14 +389,14 @@ void gas_co_selfcheck(void)
 	/*计算敏感电阻*/
 	float r = 0,max_r = 0, min_r = 0;
 	if(v)
-		r = (6.6f-2*v)/v;
+		r = (33.0f-10*v)/v;					/*co_v/10 = 3.3/(10+r)*/
 	if(min_v)
-		max_r = (6.6f-2*max_v)/min_v;
+		max_r = (33.0f-10*max_v)/max_v;		/*co_v/10 = 3.3/(10+r)*/
 	if(min_v)
-		min_r = (6.6f-2*min_v)/min_v;
+		min_r = (33.0f-10*min_v)/min_v;		/*co_v/10 = 3.3/(10+r)*/
 	diff = max_r - min_r;
 	
-	if((diff < 5) && (r > 10)){				/*敏感电阻大于10k，且敏感电阻变化不大于5k自检合格*/
+	if((diff < 5) && (r > 10) && (v > 0.05f)){				/*敏感电阻大于10k，且敏感电阻变化不大于5k自检合格,电压值大于50mV（传感器不为开路状态）*/
 		gas_info.co_process = GAS_CHECK;
 		gas_co_fifo_index = 0;
 	}
@@ -374,9 +412,9 @@ void gas_co_calculate(void)
 	if(co_v)	
 		co_r = (33.0f-10*co_v)/co_v;                  /*co_v/10 = 3.3/(10+r)*/
 	float    co = (float)(gas_info.param.CO.k * pow(co_r,gas_info.param.CO.b));
-	co_ppm = (uint16_t)co;
+	co_ppm = (uint16_t)(co*100);
 	gas_info.co = co;
-	modbus_reg_write(H2_REG_ADDR,&co_ppm,1);	
+	modbus_reg_write(CO_REG_ADDR,&co_ppm,1);	
 }
 
 
@@ -394,6 +432,7 @@ void gas_co_check_process(void)
 			gas_co_calculate();
 			break;
 		default:
+			gas_info.co_process = GAS_INIT;
 			break;
 		
 	}

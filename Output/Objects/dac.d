@@ -1,9 +1,9 @@
 .\output\objects\dac.o: Hardware\dac.c
 .\output\objects\dac.o: Hardware\dac.h
 .\output\objects\dac.o: .\System\system.h
-.\output\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\dac.o: .\CMSIS\stm32f30x.h
 .\output\objects\dac.o: .\CMSIS\core_cm4.h
 .\output\objects\dac.o: .\CMSIS\core_cmInstr.h
@@ -31,4 +31,4 @@
 .\output\objects\dac.o: .\System\sysTask.h
 .\output\objects\dac.o: .\System\system.h
 .\output\objects\dac.o: .\App\stdint.h
-.\output\objects\dac.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\math.h
+.\output\objects\dac.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

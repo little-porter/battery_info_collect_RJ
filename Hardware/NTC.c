@@ -7,13 +7,28 @@
 #define NTC_RES_TABLE		1
 
 #define NTC_TABLE_SIZE  	181
-#define NTC_FIFO_SIZE		10
+#define NTC_FIFO_SIZE		5
+
+
+typedef enum _ntc_process
+{
+	NTC_INIT = 0,
+	NTC_SELFCHECK,
+	NTC_CHECK,
+}ntc_process_t;
+
 
 static float NTC_temperture = 0;
-static float NTC_average_fifo[NTC_FIFO_SIZE] = {0};
+static uint16_t NTC_average_fifo[NTC_FIFO_SIZE] = {0};
 static int   NTC_fifo_index = 0;
 static uint8_t full_flag = 0;
 
+private ntc_process_t ntc_process = NTC_INIT;
+
+
+/**************************************************************************************************************
+	NTC阻值——温度关系表
+**************************************************************************************************************/
 const float NTC_table[2][NTC_TABLE_SIZE] = {
 {	-55,-54,-53,-52,-51,-50,-49,-48,-47,-46,-45,-44,-43,-42,-41,
 	-40,-39,-38,-37,-36,-35,-34,-33,-32,-31,-30,-29,-28,-27,-26,
@@ -49,7 +64,11 @@ const float NTC_table[2][NTC_TABLE_SIZE] = {
 	0.337}
 };
 
-
+/**************************************************************************************************************
+	NTC温度计算
+	param：ntcRes（ntc传感器阻值）
+	return：温度
+**************************************************************************************************************/
 float NTC_temperture_calculate(float ntcRes)
 {
 	uint16_t index = NTC_TABLE_SIZE;
@@ -77,22 +96,61 @@ float NTC_temperture_calculate(float ntcRes)
 }
 
 
-
-
-void NTC_task_callback(void *param)
+/**************************************************************************************************************
+	NTC初始化
+**************************************************************************************************************/
+void NTC_init(void)
 {
-	uint16_t ntc_adc = get_adc4_value();	//获取ADC值
+	NTC_average_fifo[NTC_fifo_index++] = get_ntc_ad_value();	//获取ADC值
+	if(NTC_fifo_index == NTC_FIFO_SIZE){
+		ntc_process = NTC_SELFCHECK;
+		NTC_fifo_index = 0;
+	}
+	NTC_fifo_index %= NTC_FIFO_SIZE;
+}
+
+
+/**************************************************************************************************************
+	NTC自检
+**************************************************************************************************************/
+void NTC_selfcheck(void)
+{
+	float r = 0;
+	uint16_t ntc_ad = get_ntc_ad_value();					//获取ADC值
+	ntc_ad = average_filter_uint16_calculate(ntc_ad,NTC_average_fifo,&NTC_fifo_index,NTC_FIFO_SIZE,&full_flag);
+	
+	float ntc_v = ntc_ad*3.3f/4096;							//计算v
+	
+	if((3.3f-ntc_v)){
+		r = 10*ntc_v/(3.3f-ntc_v);							//计算r		/* v/3.3 = r/(r+10) */
+	}else{
+		return;
+	}
+	
+	if(r < 2000){											//大于2000kΩ认为是开路状态，没接NTC		
+		ntc_process = NTC_CHECK;
+	}
+}
+
+/**************************************************************************************************************
+	NTC温度检测
+**************************************************************************************************************/
+void NTC_check(void)
+{
 	float r = 0,temp = 0;
 	uint16_t temperture = 0;
-	float v = ntc_adc*3.3f/4096;				//计算v
+	uint16_t ntc_ad = get_ntc_ad_value();	//获取ADC值
+	ntc_ad = average_filter_uint16_calculate(ntc_ad,NTC_average_fifo,&NTC_fifo_index,NTC_FIFO_SIZE,&full_flag);
 	
+	float ntc_v = ntc_ad*3.3f/4096;				//计算v
 	
-	if((3.3f-v))
-		r = 10*v/(3.3f-v);					//计算r		/* v/3.3 = r/(r+10) */
+	if((3.3f-ntc_v)){
+		r = 10*ntc_v/(3.3f-ntc_v);					//计算r		/* v/3.3 = r/(r+10) */
+	}else{
+		return;
+	}
 	
 	temp = NTC_temperture_calculate(r);		//计算温度
-	
-	temp = (float)average_filter_float_calculate(temp,NTC_average_fifo,&NTC_fifo_index,NTC_FIFO_SIZE,&full_flag);
 	
 	temperture = (uint16_t)(temp * 100);	//温度保留两位小数
 	modbus_reg_write(BAT_TEMP_REG_ADDR,&temperture,1);
@@ -100,11 +158,36 @@ void NTC_task_callback(void *param)
 
 
 
+/**************************************************************************************************************
+	NTC温度采集任务回调函数
+**************************************************************************************************************/
+void NTC_task_callback(void *param)
+{
+	switch(ntc_process)
+	{
+		case NTC_INIT:
+			NTC_init();
+			break;
+		case NTC_SELFCHECK:
+			NTC_selfcheck();
+			break;
+		case NTC_CHECK:
+			NTC_check();
+			break;
+		default:
+			ntc_process = NTC_INIT;
+			break;
+	}
+	
+}
 
 
+/**************************************************************************************************************
+	NTC温度采集任务，检测周期200ms，滤波周期1s
+**************************************************************************************************************/
 void NTC_task(void)
 {
-	static uint32_t start_time = 0,time = 500;
+	static uint32_t start_time = 0,time = 200;
 	static uint8_t  start_flag = 0;
 	
 	if(start_flag == 0){

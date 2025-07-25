@@ -26,6 +26,7 @@ uint16_t calibration_reg_table[REG_TABLE_LEN];
 /*public 文件外部接口*/
 uint8_t modbus_addr = 1;
 
+
 /*生成CRC-16表*/
 void modbus_generate_crcTable(void) {
     uint16_t polynomial = POLYNOMIAL;
@@ -86,7 +87,7 @@ void modbus_reg_write(uint16_t addr,uint16_t *data,uint16_t num)
         return;
     }
     memcpy(write_reg,data,num*2); 
-	modbus_reg_data_reverse(write_reg,num*2);	
+	modbus_reg_data_reverse(write_reg,num);	
 }
 
 void modbus_reg_read(uint16_t addr,uint16_t *data,uint16_t num)
@@ -110,7 +111,7 @@ void modbus_reg_read(uint16_t addr,uint16_t *data,uint16_t num)
     }
 	
 	memcpy(temp_reg,read_reg,num*2);
-	modbus_reg_data_reverse(temp_reg,num*2);
+	modbus_reg_data_reverse(temp_reg,num);
 	memcpy(data,temp_reg,num*2);
 }
 
@@ -230,7 +231,7 @@ void modbus_write_ack(uint8_t cmd, uint16_t addr,uint16_t num,uint8_t *data)
 void modbus_msg_deal_handler(uint8_t *data,uint16_t length)
 {
     uint16_t crc=0,cal_crc=0;
-	if(length > 100)	return;
+	if(length > 100 || length < 2)	return;
     if(data[MODBUS_ADDR_IDX] != modbus_addr) return;
     crc = data[length-2] | data[length-1]<<8;
     cal_crc = modbus_calculate_crc(data,length-2);
@@ -254,7 +255,6 @@ void modbus_msg_deal_handler(uint8_t *data,uint16_t length)
         break;
     }
 }
-
 
 
 
