@@ -902,7 +902,7 @@
       <GroupNumber>4</GroupNumber>
       <FileNumber>38</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Hardware\app_info.c</PathWithFileName>
