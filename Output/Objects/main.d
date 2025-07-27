@@ -1,12 +1,12 @@
 .\output\objects\main.o: App\main.c
 .\output\objects\main.o: .\Hardware\adc.h
 .\output\objects\main.o: .\App\stdint.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\math.h
 .\output\objects\main.o: .\App\main.h
 .\output\objects\main.o: .\CMSIS\stm32f30x.h
 .\output\objects\main.o: .\CMSIS\core_cm4.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
 .\output\objects\main.o: .\CMSIS\core_cmInstr.h
 .\output\objects\main.o: .\CMSIS\core_cmFunc.h
 .\output\objects\main.o: .\CMSIS\core_cmSimd.h
@@ -32,11 +32,11 @@
 .\output\objects\main.o: .\App\config.h
 .\output\objects\main.o: .\Console\serial.h
 .\output\objects\main.o: .\Console\fifo.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdio.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
 .\output\objects\main.o: .\Console\console.h
-.\output\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+.\output\objects\main.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdarg.h
 .\output\objects\main.o: .\System\system.h
 .\output\objects\main.o: .\System\sysTask.h
 .\output\objects\main.o: .\System\system.h
@@ -52,3 +52,4 @@
 .\output\objects\main.o: .\Hardware\battery_info.h
 .\output\objects\main.o: .\Hardware\iap.h
 .\output\objects\main.o: .\Hardware\flash.h
+.\output\objects\main.o: .\Hardware\app_info.h

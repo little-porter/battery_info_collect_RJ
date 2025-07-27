@@ -5,6 +5,7 @@
 #include <string.h>
 
 void modbus_generate_crcTable(void);
+uint16_t modbus_calculate_crc(uint8_t *data,uint16_t length);
 void modbus_msg_deal_handler(uint8_t *data,uint16_t length);
 
 void uart_data_send(uint8_t *data,uint16_t len);

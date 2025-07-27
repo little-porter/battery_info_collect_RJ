@@ -8,12 +8,12 @@
 * @param  None
 * @retval 1succ  0fail
 */
-ErrorStatus flash_erase_app_block(void)
+ErrorStatus flash_erase_app1_block(void)
 {
 	FLASH_Unlock();
-	for(int i = 0; i< (APP_BLOCK1_SIZE / FLASH_PAGE_SIZE); i++)
+	for(int i = 0; i< (APP1_SIZE / FLASH_PAGE_SIZE); i++)
 	{
-		if(FLASH_ErasePage(APP_BLOCK1_ADDR + (FLASH_PAGE_SIZE * i)) != FLASH_COMPLETE) 
+		if(FLASH_ErasePage(APP1_SIZE + (FLASH_PAGE_SIZE * i)) != FLASH_COMPLETE) 
 		{
 			FLASH_Lock();
 			return ERROR;
@@ -28,12 +28,12 @@ ErrorStatus flash_erase_app_block(void)
 * @param  None
 * @retval None
 */
-ErrorStatus flash_erase_cache_block(void)
+ErrorStatus flash_erase_app2_block(void)
 {
 	FLASH_Unlock();
-	for(int i = 0; i< (APP_BLOCK2_SIZE / FLASH_PAGE_SIZE); i++)
+	for(int i = 0; i< (APP2_SIZE / FLASH_PAGE_SIZE); i++)
 	{
-		if(FLASH_ErasePage(APP_BLOCK2_ADDR + (FLASH_PAGE_SIZE * i)) != FLASH_COMPLETE) 
+		if(FLASH_ErasePage(APP2_SIZE + (FLASH_PAGE_SIZE * i)) != FLASH_COMPLETE) 
 		{
 			FLASH_Lock();
 			return ERROR;
@@ -43,12 +43,12 @@ ErrorStatus flash_erase_cache_block(void)
 	return SUCCESS;
 }
 
-ErrorStatus flash_erase_ota_info_block(void)
+ErrorStatus flash_erase_iap_info_block(void)
 {
 	FLASH_Unlock();
-	for(int i = 0; i< (FLASH_OTA_DATA_SIZE / FLASH_PAGE_SIZE); i++)
+	for(int i = 0; i< (IAP_INFO_SIZE / FLASH_PAGE_SIZE); i++)
 	{
-		if(FLASH_ErasePage(FLASH_OTA_DATA_ADDR + (FLASH_PAGE_SIZE * i)) != FLASH_COMPLETE) 
+		if(FLASH_ErasePage(IAP_INFO_SIZE + (FLASH_PAGE_SIZE * i)) != FLASH_COMPLETE) 
 		{
 			FLASH_Lock();
 			return ERROR;
@@ -97,7 +97,7 @@ void flash_erase_user_data(void)
 {
 	FLASH_Unlock();
 	
-    if (FLASH_ErasePage(FLASH_USER_DATA_ADDR)!= FLASH_COMPLETE)
+    if (FLASH_ErasePage(USER_INFO_START_ADDR)!= FLASH_COMPLETE)
     {
      /* Error occurred while sector erase. 
          User can add here some code to deal with this error  */
@@ -114,21 +114,7 @@ void flash_erase_user_data(void)
 * @param  erase_addr:²Á³ýµÄµØÖ·
 * @retval None
 */
-void flash_erase_ota_data(void)
-{
-	FLASH_Unlock();
-	
-    if (FLASH_ErasePage(FLASH_OTA_DATA_ADDR)!= FLASH_COMPLETE)
-    {
-     /* Error occurred while sector erase. 
-         User can add here some code to deal with this error  */
-      while (1)
-      {
-      }
-    }
-  
-	FLASH_Lock();
-}
+
 
 
 

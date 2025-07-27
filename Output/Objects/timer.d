@@ -1,9 +1,9 @@
 .\output\objects\timer.o: Hardware\timer.c
 .\output\objects\timer.o: Hardware\timer.h
 .\output\objects\timer.o: .\System\system.h
-.\output\objects\timer.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\timer.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\timer.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\timer.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\timer.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\timer.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\timer.o: .\CMSIS\stm32f30x.h
 .\output\objects\timer.o: .\CMSIS\core_cm4.h
 .\output\objects\timer.o: .\CMSIS\core_cmInstr.h

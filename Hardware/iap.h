@@ -6,19 +6,13 @@
 #include "flash.h"
 #include "system.h"
 
+#include "modbus.h"
 
-void iap_jump_app(void);
+#define iap_crc_calculate(a,b)	modbus_calculate_crc(a,b)
 
 void iap_init(void);
 void iap_task(void);
-void iap_write_data(uint8_t *pdata,uint16_t num,uint16_t timeout);
 
-
-void iap_flag_idle(void);
-void iap_flag_start(void);
-void iap_flag_finish(void);
-
-void iap_crc_set(uint16_t crc);
 void iap_msg_deal_handler(uint8_t *data,uint16_t length);
 
 
