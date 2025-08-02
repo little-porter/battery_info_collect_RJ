@@ -4,6 +4,7 @@
 
 void timer3_config(void)
 {
+	TIM_DeInit(TIM3);
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
 			
@@ -38,6 +39,7 @@ void timer3_config(void)
 
 void timer1_config(void)
 {
+	TIM_DeInit(TIM1);
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
 		

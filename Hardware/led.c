@@ -13,6 +13,7 @@
 
 #define LED_LIST_SIZE	10
 
+#define LED_PERIOD_200MS		200
 #define LED_PERIOD_500MS		500
 #define LED_PERIOD_1000MS		1000
 #define LED_PERIOD_2000MS		2000
@@ -57,7 +58,7 @@ private led_device_t led_sys = {
 	.port = GPIOB,
 	.pin  = GPIO_Pin_9,
 	.status = LED_BLINK,
-	.period = LED_PERIOD_500MS,
+	.period = LED_PERIOD_200MS,
 	.cur_state  = LED_STATE_OFF,
 };
 

@@ -1,6 +1,8 @@
 #include "modbus.h"
 #include "gas.h"
 
+#include "iap.h"
+
 /*private 文件内部私有*/
 #define POLYNOMIAL 0xA001   // Modbus CRC-16 polynomial (低字节优先)
 uint16_t crcTable[256];     // CRC-16 table
@@ -22,9 +24,11 @@ uint16_t calibration_reg_table[REG_TABLE_LEN];
 #define  MODBUS_READ_CONFIG_REG_CMD        0x03
 #define  MODBUS_READ_DATA_REG_CMD          0x04
 #define  MODBUS_WRITE_CONFIG_REG_CMD       0x10
+#define  MODBUS_APP_UPGRADE_CMD			   0xff
 
 /*public 文件外部接口*/
 uint8_t modbus_addr = 1;
+const uint8_t broadcast_addr = 0xff;
 
 
 /*生成CRC-16表*/
@@ -58,6 +62,18 @@ uint16_t modbus_calculate_crc(uint8_t *data,uint16_t length)
 
     return crc;
 }
+
+uint16_t modbus_calculate_crc_ota(uint16_t cal_crc,uint8_t *data,uint32_t length)
+{
+    uint16_t crc = cal_crc;
+    for(uint16_t i = 0; i < length; i++){
+        uint16_t index = (crc ^ data[i]) & 0xFF;
+        crc = (crc >> 8) ^ crcTable[index];
+    }
+
+    return crc;
+}
+
 
 void modbus_reg_data_reverse(uint16_t *reg,uint16_t num)
 {
@@ -231,8 +247,8 @@ void modbus_write_ack(uint8_t cmd, uint16_t addr,uint16_t num,uint8_t *data)
 void modbus_msg_deal_handler(uint8_t *data,uint16_t length)
 {
     uint16_t crc=0,cal_crc=0;
-	if(length > 100 || length < 2)	return;
-    if(data[MODBUS_ADDR_IDX] != modbus_addr) return;
+	if(length > 2048 || length < 2)	return;
+    if((data[MODBUS_ADDR_IDX] != modbus_addr) && (data[MODBUS_ADDR_IDX] != broadcast_addr)) return;
     crc = data[length-2] | data[length-1]<<8;
     cal_crc = modbus_calculate_crc(data,length-2);
     if(crc != cal_crc) return;
@@ -249,6 +265,12 @@ void modbus_msg_deal_handler(uint8_t *data,uint16_t length)
     case MODBUS_WRITE_CONFIG_REG_CMD:
         modbus_write_ack(cmd,addr,num,data);
         break;
+	
+	case MODBUS_APP_UPGRADE_CMD:
+		if((data[2]) == 0x02){
+			iap_msg_deal_handler(data,length);
+		}
+		break;
     default:
         /*功能码错误*/
         modbus_error_ask(cmd,0x01);

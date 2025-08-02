@@ -34,3 +34,15 @@ bool system_timer_triggered(uint32_t start,uint32_t time)
 	}	
 }
 
+void system_gpio_deinit(void)
+{
+	GPIO_DeInit(GPIOA);
+	GPIO_DeInit(GPIOB);
+	GPIO_DeInit(GPIOC);
+	GPIO_DeInit(GPIOD);
+	GPIO_DeInit(GPIOE);
+	GPIO_DeInit(GPIOF);
+	GPIO_DeInit(GPIOG);
+}
+
+

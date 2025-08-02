@@ -9,6 +9,8 @@
 #include "average_filter.h"
 #include "flash.h"
 
+#define GAS_PARAM_SAVE_ADDR 	USER_INFO_START_ADDR
+
 #define gas_smoke_on()	GPIO_SetBits(GPIOC,GPIO_Pin_13)
 #define gas_smoke_off()	GPIO_ResetBits(GPIOC,GPIO_Pin_13)
 //#define gas_param_save_flag_set()	(gas_info.param.save_flag = 1)
@@ -63,12 +65,12 @@ void gas_param_save(void)
 		/*±£´æ²ÎÊý*/
 		uint8_t reply = 3;
 		gas_param_t read_param = {0};
-		uint8_t *data = (uint8_t *)&gas_info.param;
+		uint16_t *data = (uint16_t *)&gas_info.param;
 		uint16_t len = sizeof(gas_param_t);
 		while((0 != memcmp(&read_param,&gas_info.param,sizeof(gas_param_t))) && (reply--)){
-//			flash_pages_erase(GAS_PARAM_SAVE_ADDR,1);
-//			flash_write_data(GAS_PARAM_SAVE_ADDR,data,len);
-//			flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&read_param,sizeof(gas_param_t));
+			flash_erase_one_page(GAS_PARAM_SAVE_ADDR);
+			flash_write(GAS_PARAM_SAVE_ADDR,data,(len+1)/2);
+			flash_read(GAS_PARAM_SAVE_ADDR,(uint8_t *)&read_param,sizeof(gas_param_t));
 		}
 		gas_param_save_flag_reset();
 	}
@@ -104,13 +106,14 @@ void gas_param_modbus_reg_init(void)
 
 void gas_param_init(void)
 {
-//	flash_read_data(GAS_PARAM_SAVE_ADDR,(uint8_t *)&gas_info.param,sizeof(gas_param_t));
+	flash_read(GAS_PARAM_SAVE_ADDR,(uint8_t *)&gas_info.param,sizeof(gas_param_t));
 	if(gas_info.param.save_flag != 1){
 		gas_info.param.H2.k = 1;
 		gas_info.param.H2.b = 1;
 		gas_info.param.CO.k = 1;
 		gas_info.param.CO.b = 1;
 		gas_info.param.save_flag = 1;
+		gas_param_save();
 	}else{
 		gas_info.param.save_flag = 0;
 //		gas_info.param.H2.k = 1.5;
@@ -119,7 +122,6 @@ void gas_param_init(void)
 //		gas_info.param.CO.b = 2;
 	}
 	
-	gas_param_save();
 	gas_param_modbus_reg_init();
 	
 	

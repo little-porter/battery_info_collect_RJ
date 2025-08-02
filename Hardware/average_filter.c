@@ -74,7 +74,7 @@ uint16_t average_filter_uint16_calculate(uint16_t newData, uint16_t *window, int
 		}
 	}
     
-	if((*index) == window_size)
+	if((*index) >= window_size)
 	{
 		*full = 1;
 		(*index) = 0;

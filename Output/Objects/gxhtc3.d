@@ -2,9 +2,9 @@
 .\output\objects\gxhtc3.o: Hardware\GXHTC3.h
 .\output\objects\gxhtc3.o: Hardware\si2c.h
 .\output\objects\gxhtc3.o: .\System\system.h
-.\output\objects\gxhtc3.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\objects\gxhtc3.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\gxhtc3.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\gxhtc3.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\gxhtc3.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\gxhtc3.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\gxhtc3.o: .\CMSIS\stm32f30x.h
 .\output\objects\gxhtc3.o: .\CMSIS\core_cm4.h
 .\output\objects\gxhtc3.o: .\CMSIS\core_cmInstr.h
@@ -32,6 +32,6 @@
 .\output\objects\gxhtc3.o: .\System\sysTask.h
 .\output\objects\gxhtc3.o: .\System\system.h
 .\output\objects\gxhtc3.o: Hardware\crc8.h
-.\output\objects\gxhtc3.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdio.h
+.\output\objects\gxhtc3.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\output\objects\gxhtc3.o: Hardware\modbus.h
-.\output\objects\gxhtc3.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
+.\output\objects\gxhtc3.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

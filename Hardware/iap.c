@@ -8,13 +8,15 @@
 
 #define FACTORY_APP		0
 #define IAP_APP			1
-#define APP_TYPE		IAP_APP
+#define APP_TYPE		FACTORY_APP
 #define APP_MAX_SIZE	0xA000				//40kb
 #define REG_IAP_START_FLAG 0x0003
 #define REG_IAP_VERSION_AA 0x3003
 #define REG_IAP_VERSION_BB 0x3004
 #define REG_IAP_VERSION_CC 0x3005
 #define IAP_OUT_TIME_MS	   10000
+
+#define IAP_INFO_CRC		0xAA55
 
 
 typedef void (*pAppFunction)(void);
@@ -57,9 +59,11 @@ typedef enum _iap_status{
 }iap_status_t;
 
 
-
-
-
+typedef enum _iap_upgrade_falg
+{
+	IAP_UPGRADE_FLAG_NO = 0,
+	IAP_UPGRADE_FLAG_YES,
+}iap_upgrade_flag_t;
 
 
 typedef enum _iap_run_app
@@ -79,15 +83,10 @@ typedef struct _iap_app_bin_info
 
 typedef struct _iap_info
 {
-	iap_run_app_t run_app;
-	iap_run_app_t next_run_app;
-	iap_app_bin_info_t run_app_bin;
-	iap_app_bin_info_t factory_bin;
-	iap_app_bin_info_t app1_bin;
-	iap_app_bin_info_t app2_bin;
+	iap_upgrade_flag_t  upgrade_flag;
 	
 	uint32_t run_app_addr;
-	uint32_t next_app_addr;
+	uint32_t cache_addr;
 	
 	iap_process_t process;
 	uint32_t upgrade_size;
@@ -95,6 +94,7 @@ typedef struct _iap_info
 	iap_falg_t    iap_flag;
 	uint16_t  iap_status;
 	
+	uint16_t erase_page;
 	uint32_t bin_size;
 	uint16_t bin_crc;
 	uint16_t info_crc;
@@ -102,16 +102,18 @@ typedef struct _iap_info
 
 iap_info_t iap_info;
 
-#define  IAP_TIMEOUT		10000
-uint16_t   iap_delay_time = IAP_TIMEOUT;
+#define  IAP_TIMEOUT		10
+uint16_t   iap_delay_time = IAP_TIMEOUT;					//IAP程序更新过程超时时间
+uint16_t   iap_jump_time  = IAP_TIMEOUT;					//IAP跳转时间
 uint8_t    app_is_executable = 0;
 
 void iap_info_init(void)
 {
-	iap_info.run_app = IAP_RUN_FACTORY;
-	iap_info.factory_bin.version = (app_version_t *)factory_version;
-	iap_info.app1_bin.version = (app_version_t *)app1_version;
-	iap_info.app2_bin.version = (app_version_t *)app2_version;
+	iap_info.upgrade_flag = IAP_UPGRADE_FLAG_NO;
+	iap_info.run_app_addr = FACTORY_APP_START_ADDR;
+	iap_info.cache_addr = CACHE_START_ADDR;
+	iap_info.process = IAP_PROCESS_IDLE;
+	iap_info.info_crc = IAP_INFO_CRC;
 }
 
 void iap_info_save(void)
@@ -124,8 +126,8 @@ void iap_info_read(void)
 {
 	iap_info_t *info = (iap_info_t *)(IAP_INFO_START_ADDR);
 	memcpy(&iap_info,info,sizeof(iap_info_t));
-	uint16_t cal_size = sizeof(iap_run_app_t) + 3 * sizeof(iap_app_bin_info_t) + sizeof(iap_process_t);
-	if(iap_info.info_crc == iap_crc_calculate((uint8_t *)&iap_info,cal_size)){
+//	flash_read(IAP_INFO_START_ADDR,(uint8_t *)&iap_info,(uint16_t)sizeof(iap_info_t));
+	if(iap_info.info_crc == IAP_INFO_CRC){
 		
 	}else{
 		iap_info_init();	//初始化iap信息
@@ -137,72 +139,17 @@ void iap_init(void)
 {
 	iap_info_read();
 	iap_delay_time = IAP_TIMEOUT;
+	iap_jump_time  = IAP_TIMEOUT;
+	iap_info.process = IAP_PROCESS_IDLE;
+	iap_info.iap_flag = IAP_FLAG_IDLE;
 	
-	if(iap_info.run_app == IAP_RUN_FACTORY){
-		iap_info.run_app_addr = FACTORY_APP_START_ADDR;
-		iap_info.next_run_app = IAP_RUN_APP1;
-		iap_info.next_app_addr = APP1_START_ADDR;
-	}else if(iap_info.run_app == IAP_RUN_APP1){
-		iap_info.run_app_addr = APP1_START_ADDR;
-		iap_info.next_run_app = IAP_RUN_APP2;
-		iap_info.next_app_addr = APP2_START_ADDR;
-	}else if(iap_info.run_app == IAP_RUN_APP2){
-		iap_info.run_app_addr = APP2_START_ADDR;
-		iap_info.next_run_app = IAP_RUN_APP1;
-		iap_info.next_app_addr = APP1_START_ADDR;
-	}else{;}
+	modbus_reg_write(REG_IAP_VERSION_AA,(uint16_t *)(iap_info.run_app_addr+APP_INFO_OFFSET),6);
 }
 
-void iap_jump_app(uint32_t app_entre_addr)
+
+void iap_cache_block_erase(void)
 {
-	uint32_t jumpAdderss = *(__IO uint32_t *)(app_entre_addr+4);
-	pAppFunction app_main;
-	
-	// 关闭初始化的外设
-	/* NVIC */
-	__disable_irq();
-	SCB->ICSR |= SCB_ICSR_PENDSVCLR_Msk;
-	SCB->ICSR |= SCB_ICSR_PENDSTCLR_Msk;
-
-	__set_MSP(*(__IO uint32_t *)(app_entre_addr));
-	SCB->VTOR = app_entre_addr;
-
-	jumpAdderss = *(__IO uint32_t *)(app_entre_addr + 4);
-	app_main = (pAppFunction)jumpAdderss;
-	__enable_irq();
-	app_main();	
-}
-
-void iap_task_callback(void *param)
-{
-	if(iap_info.run_app == IAP_RUN_FACTORY){
-		iap_delay_time = IAP_TIMEOUT;
-	}else{
-		if(iap_delay_time > 0){
-			iap_delay_time--;
-		}else{;}
-	}
-	
-	if(iap_delay_time == 0){
-		if(iap_info.run_app == IAP_RUN_APP1){
-			iap_jump_app(APP1_START_ADDR);
-		}else if(iap_info.run_app == IAP_RUN_APP2){
-			iap_jump_app(APP2_START_ADDR);
-		}else{
-			iap_info.run_app = IAP_RUN_FACTORY;
-		}
-	}else{;}
-}
-
-void iap_next_block_erase(void)
-{
-	if(iap_info.run_app == IAP_RUN_FACTORY){
-		flash_erase_app1_block();
-	}else if(iap_info.run_app == IAP_RUN_APP1){
-		flash_erase_app2_block();
-	}else if(iap_info.run_app == IAP_RUN_APP2){
-		flash_erase_app1_block();
-	}else{;}
+	flash_erase_cache_block();	
 }
 
 uint16_t iap_read_bytes(void)
@@ -273,19 +220,40 @@ ErrorStatus iap_app_name_check(uint8_t *pdata,uint16_t num)
 }
 ErrorStatus iap_app_version_check(uint8_t *pdata,uint16_t num)
 {
+	app_version_t *run_app_version = (app_version_t *)(iap_info.run_app_addr + APP_INFO_OFFSET);
 	app_version_t *new_app_version = (app_version_t *)(pdata + APP_INFO_OFFSET);
-	if(new_app_version->aa < iap_info.run_app_bin.version->aa){
-		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
-		return ERROR;
-	}else if(new_app_version->bb < iap_info.run_app_bin.version->bb){
-		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
-		return ERROR;
-	}else if(new_app_version->cc <= iap_info.run_app_bin.version->cc){
-		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
-		return ERROR;
-	}else{
+	
+	if((run_app_version->aa == 0xFFFF) && (run_app_version->bb == 0xFFFF) && (run_app_version->cc == 0xFFFF)){
+		return SUCCESS;
+	}else{;}
+	
+	if(0 > memcmp(run_app_version,new_app_version,6)){
 		return SUCCESS;	
+	}else{
+		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
+		return ERROR;
 	}
+	
+//	if(new_app_version->aa < run_app_version->aa){
+//		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
+//		return ERROR;
+//	}else if(new_app_version->aa > run_app_version->aa){
+//		return SUCCESS;
+//	}else{;}
+//		
+//	if(new_app_version->bb < run_app_version->bb){
+//		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
+//		return ERROR;
+//	}else if(new_app_version->bb > run_app_version->bb){
+//		return SUCCESS;
+//	}else{;}
+//		
+//	if(new_app_version->cc <= run_app_version->cc){
+//		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
+//		return ERROR;
+//	}else{
+//		return SUCCESS;	
+//	}
 	
 }
 
@@ -319,7 +287,7 @@ ErrorStatus iap_head_check(void)
 	ErrorStatus status = SUCCESS;
 	uint16_t read_bytes = 0;
 	uint8_t read_data[1024] = {0};
-	if(iap_read_bytes() > 1024){
+	if(iap_read_bytes() >= 1024){
 		read_bytes = iap_read_data(read_data,1024,100);
 		if(ERROR == iap_app_name_check(read_data,1024)){
 			status = ERROR;
@@ -330,9 +298,15 @@ ErrorStatus iap_head_check(void)
 			status = ERROR;
 			return status;
 		}else{;}
+		
+		if((CACHE_START_ADDR+iap_info.bin_size+read_bytes) >= CACHE_START_ADDR+iap_info.erase_page*FLASH_PAGE_SIZE){
+			flash_erase_one_page(CACHE_START_ADDR+iap_info.erase_page*FLASH_PAGE_SIZE);
+			iap_info.erase_page++;
+		}else{;}
 			
-		flash_write(iap_info.next_app_addr+iap_info.bin_size,(uint16_t *)read_data,read_bytes/2);
+		flash_write(CACHE_START_ADDR+iap_info.bin_size,(uint16_t *)read_data,(read_bytes+1)/2);
 		iap_info.bin_size = iap_info.bin_size + read_bytes;
+		iap_delay_time = IAP_TIMEOUT;
 		return SUCCESS;
 	}else{;}
 	
@@ -354,6 +328,20 @@ ErrorStatus iap_finish_check(void)
 	return status;
 }
 
+ErrorStatus iap_timeout_check(void)
+{
+	ErrorStatus status = ERROR;
+	if(iap_delay_time == 0){
+		iap_info.iap_status = IAP_STATUS_TIMEOUT;
+		status = SUCCESS;
+		return status;
+	}else{
+		return status;
+	}
+	
+}
+
+
 
 ErrorStatus iap_upgrade(void)
 {
@@ -364,20 +352,35 @@ ErrorStatus iap_upgrade(void)
 	read_bytes = iap_read_data(read_data,1024,100);
 	if(read_bytes == 0)  return status;
 	if((iap_info.bin_size+read_bytes) < APP_MAX_SIZE){
-		flash_write(iap_info.next_app_addr+iap_info.bin_size,(uint16_t *)read_data,read_bytes/2);
+		if((CACHE_START_ADDR+iap_info.bin_size+read_bytes) >= CACHE_START_ADDR+iap_info.erase_page*FLASH_PAGE_SIZE){
+			flash_erase_one_page(CACHE_START_ADDR+iap_info.erase_page*FLASH_PAGE_SIZE);
+			iap_info.erase_page++;
+		}else{;}
+		
+		flash_write(iap_info.cache_addr+iap_info.bin_size,(uint16_t *)read_data,read_bytes/2);
 		iap_info.bin_size = iap_info.bin_size + read_bytes;
 	}else{
 		status = ERROR;
 	}
 	
+	iap_delay_time = IAP_TIMEOUT;
 	return status;
 }
 
 ErrorStatus iap_bin_crc(void)
 {
 	ErrorStatus status = SUCCESS;
-	uint8_t *data = (uint8_t *)(iap_info.next_app_addr);
-	
+	uint8_t *data = (uint8_t *)(iap_info.cache_addr);
+//	uint16_t cal_crc = 0xFFFF;
+//	uint32_t offset = 0;
+//	
+//	for(offset = 0;(offset + 1024)<iap_info.bin_size;offset+=1024){
+//		cal_crc = modbus_calculate_crc_ota(cal_crc,data+offset,1024);
+//	} 
+//	if(iap_info.bin_size%1024 > 0){
+//		cal_crc = modbus_calculate_crc_ota(cal_crc,data+offset,iap_info.bin_size%1024);
+//	}
+//	iap_info.bin_crc = cal_crc;
 	iap_info.bin_crc = iap_crc_calculate(data,iap_info.bin_size);
 	
 	if(iap_info.bin_crc == iap_info.upgrade_crc){
@@ -402,9 +405,11 @@ void iap_upgrade_process(void *param)
 					iap_info.process = IAP_PROCESS_HEAD_CHECK;
 					iap_info.bin_size = 0;
 					iap_info.bin_crc = 0;
+					iap_info.erase_page = 0;
 					iap_fifo.pos = 0;
 					iap_fifo.tail = 0;
-					iap_next_block_erase();
+					iap_delay_time = IAP_TIMEOUT;
+//					iap_cache_block_erase();
 				}else{
 					iap_info.process = IAP_PROCESS_ERROR;
 				}
@@ -414,16 +419,23 @@ void iap_upgrade_process(void *param)
 			if(iap_head_check()){
 				iap_info.process = IAP_PROCESS_UPGRADE;
 			}else{;}
+			if(iap_timeout_check()){
+				iap_info.process = IAP_PROCESS_ERROR;
+			}else{;}				
 			break;
 		case IAP_PROCESS_UPGRADE:
 			iap_upgrade();
 			if(iap_finish_check()){
 				iap_info.process = IAP_PROCESS_FINISH;
 			}else{;}
+				
+			if(iap_timeout_check()){
+				iap_info.process = IAP_PROCESS_ERROR;
+			}else{;}
 			break;
 		case IAP_PROCESS_FINISH:
 			if(iap_bin_crc()){
-				iap_info.run_app = iap_info.next_run_app;
+				iap_info.upgrade_flag = IAP_UPGRADE_FLAG_YES;
 				iap_info_save();
 				/*重启设备*/
 				NVIC_SystemReset();
@@ -447,9 +459,101 @@ void iap_upgrade_process(void *param)
 }
 
 
+void iap_jump_app(uint32_t app_entre_addr)
+{
+	uint32_t jumpAdderss = *(__IO uint32_t *)(app_entre_addr+4);
+	
+	pAppFunction app_main;
+	
+	// 关闭初始化的外设
+	/* NVIC */
+	__disable_irq();
+	SCB->ICSR |= SCB_ICSR_PENDSVCLR_Msk;
+	SCB->ICSR |= SCB_ICSR_PENDSTCLR_Msk;
+
+	__set_MSP(*(__IO uint32_t *)(app_entre_addr));
+	SCB->VTOR = app_entre_addr;
+
+//	jumpAdderss = *(__IO uint32_t *)(app_entre_addr + 4);
+	app_main = (pAppFunction)jumpAdderss;
+	__enable_irq();
+	app_main();	
+}
+
+void iap_task_callback(void *param)
+{
+	if(iap_delay_time > 0){
+		iap_delay_time--;
+	}else{;}
+			
+#if(APP_TYPE == FACTORY_APP)			//出厂APP才需要跳转	
+	if(iap_info.run_app_addr == FACTORY_APP_START_ADDR){
+		iap_jump_time = IAP_TIMEOUT;
+	}else{
+		if(iap_jump_time > 0){
+			iap_jump_time--;
+		}else{;}
+	}
+		
+		
+	if(iap_info.process ==  IAP_PROCESS_IDLE && iap_jump_time == 0){
+	if(iap_app_name_check((uint8_t *)APP_START_ADDR,1024)){
+		iap_jump_app(APP_START_ADDR);
+	}else{
+		iap_info.run_app_addr = FACTORY_APP_START_ADDR;
+	}
+	}else{;}
+#endif	
+}
+
+ErrorStatus iap_app_update(void)
+{
+	ErrorStatus status = ERROR;
+	const uint16_t write_size = 1024;
+	static uint32_t complete_bin = 0;
+	static uint32_t app_area = (uint32_t)APP_START_ADDR;
+	static uint16_t *cache_area = (uint16_t *)CACHE_START_ADDR;
+	static uint16_t page_num = 0;
+	uint8_t reply = 3;
+	
+	if((APP_START_ADDR+complete_bin+write_size) >= (APP_START_ADDR+FLASH_PAGE_SIZE*page_num)){
+//		flash_erase_one_page(APP_START_ADDR+FLASH_PAGE_SIZE*page_num);
+		while((ERROR == flash_erase_one_page(APP_START_ADDR+FLASH_PAGE_SIZE*page_num)) && (reply--));
+		page_num++;
+	}
+	
+//	if(complete_bin == 0){
+//		while((ERROR == flash_erase_app_block()) && (reply--));
+////		flash_erase_app_block();
+//	}else{;}
+	
+	if((complete_bin+write_size) < iap_info.bin_size)
+	{
+		flash_write(app_area,(uint16_t *)((__IO uint16_t *)cache_area),write_size/2);
+
+		app_area += write_size;
+		cache_area += (write_size/2);
+		complete_bin += write_size;
+	}else if(complete_bin != iap_info.bin_size){
+		flash_write(app_area,cache_area,((iap_info.bin_size - complete_bin)+1)/2);
+		app_area += (iap_info.bin_size - complete_bin);
+		cache_area += ((iap_info.bin_size - complete_bin)+1)/2;
+		complete_bin += (iap_info.bin_size - complete_bin);
+	}else{
+		iap_info.upgrade_flag = IAP_UPGRADE_FLAG_NO;
+		iap_info.run_app_addr = APP_START_ADDR;
+		iap_info_save();
+	}
+	
+	
+	iap_jump_time = IAP_TIMEOUT;
+	return status;
+}
+
+
 void iap_task(void)
 {
-#if(APP_TYPE == FACTORY_APP)
+
 	static uint32_t start_time = 0,time = 1000;
 	static uint8_t  start_flag = 0;
 	
@@ -463,9 +567,17 @@ void iap_task(void)
 		start_flag = 0;
 		sysTask_publish(iap_task_callback,NULL);
 	}
-#endif	
+
 	/*iap升级过程*/
-	
+	if(iap_info.upgrade_flag == IAP_UPGRADE_FLAG_YES){
+#if(APP_TYPE == FACTORY_APP)
+		iap_app_update();								//存在更新进行数据搬运乒乓搬运
+#else
+		NVIC_SystemReset();
+#endif	
+	}else{
+		iap_upgrade_process(NULL);						//进行更行流程
+	}
 }
 
 void iap_msg_deal_handler(uint8_t *data,uint16_t length)
@@ -474,11 +586,11 @@ void iap_msg_deal_handler(uint8_t *data,uint16_t length)
 	uint16_t data_num = data[6]<<8 | data[7];
 	if(data[3] == 0x00){
 		iap_info.iap_flag = IAP_FLAG_START;
-		iap_info.upgrade_size = (data[8]<<24) | (data[9]<<16) | (data[10]<<8) |(data[11]<<0) ;
+		iap_info.upgrade_size = (data[8]<<0) | (data[9]<<8) | (data[10]<<16) |(data[11]<<24) ;
 		return;
 	}else if(data[3] == 0x11){
 		iap_info.iap_flag = IAP_FLAG_FINISH;
-		iap_info.upgrade_crc = (data[8]<<8) | data[9];
+		iap_info.upgrade_crc = (data[8]<<0) | (data[9]<<8);
 		return;
 	}else if(data[3] == 0x10){
 		iap_info.iap_flag = IAP_FLAG_IDLE;

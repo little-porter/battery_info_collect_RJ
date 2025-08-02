@@ -18,7 +18,6 @@
 
 
 
-#define FLASH_PAGE_SIZE                     0x00000800  //2k
 #define FLASH_BOOTLOADER_START_ADDR         0x08000000  //bootloader起始地址
 #define FLASH_BOOTLOADER_SIZE               0x0000c800  //bootloader大小 50k
 #define FLASH_DATASAVE_START_ADDR           0x0800c800  //数据存储区起始地址

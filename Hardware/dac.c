@@ -60,6 +60,7 @@ void dac_gpio_config(void)
 **************************************************************************************************************/
 void dac_dma_config(void)
 {
+	DMA_DeInit(DMA2_Channel3);
 	DMA_InitTypeDef         DMA_InitStructure;
 //	NVIC_InitTypeDef 		NVIC_InitStructure; 
 	
@@ -103,12 +104,10 @@ void dac_dma_config(void)
 void dac_config(void)
 {
 	DAC_InitTypeDef            DAC_InitStructure;
-	
+	DAC_DeInit(DAC1);
 	/* DAC Periph clock enable */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC1, ENABLE);
-	
-	
-	DAC_DeInit(DAC1); 
+	 
 	DAC_InitStructure.DAC_Trigger = DAC_Trigger_T2_TRGO;
 	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;
 	DAC_InitStructure.DAC_LFSRUnmask_TriangleAmplitude = DAC_LFSRUnmask_Bit0;

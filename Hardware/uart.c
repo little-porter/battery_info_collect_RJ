@@ -2,7 +2,7 @@
 #include "modbus.h"
 
 
-#define DATA_FIFO_SIZE		1024
+#define DATA_FIFO_SIZE		2048
 
 typedef struct _data_fifo
 {
@@ -51,6 +51,7 @@ void uart_data_send(uint8_t *data,uint16_t len)
 
 void uart2_config(void)
 {
+	USART_DeInit(USART2);
 	//  πƒ‹usart ±÷”
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 	
@@ -65,8 +66,6 @@ void uart2_config(void)
 	NVIC_Init(&NVIC_InitStructure);
 	
 	
-		
-	USART_DeInit(USART2);
 	USART_InitStructure.USART_BaudRate = 115200;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;

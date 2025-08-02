@@ -17,9 +17,12 @@
 
 int main(void)
 {
+	modbus_generate_crcTable();
+	iap_init();
+	system_gpio_deinit();
   	SysTick_Config(72000);
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	modbus_generate_crcTable();
+	
 	sysTask_init();
 	led_init();
 	dac_init();
@@ -28,18 +31,17 @@ int main(void)
 	
 	gas_init();
 	
-	iap_init();
-	
 	uart2_init();
 	
 	while(1)
 	{
 		led_task();
-		led_change_task();
+//		led_change_task();
 		GXHTC3_task();
 		battery_info_task();
 		NTC_task();
 		gas_task();
+		iap_task();
 
 		sysTask_execute_handler();
 	}

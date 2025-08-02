@@ -2,7 +2,7 @@
 .\output\objects\iap.o: Hardware\iap.h
 .\output\objects\iap.o: .\CMSIS\stm32f30x.h
 .\output\objects\iap.o: .\CMSIS\core_cm4.h
-.\output\objects\iap.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\iap.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\output\objects\iap.o: .\CMSIS\core_cmInstr.h
 .\output\objects\iap.o: .\CMSIS\core_cmFunc.h
 .\output\objects\iap.o: .\CMSIS\core_cmSimd.h
@@ -28,9 +28,9 @@
 .\output\objects\iap.o: Hardware\flash.h
 .\output\objects\iap.o: Hardware\app_info.h
 .\output\objects\iap.o: .\System\system.h
-.\output\objects\iap.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdbool.h
-.\output\objects\iap.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdlib.h
+.\output\objects\iap.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\output\objects\iap.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\output\objects\iap.o: .\System\sysTask.h
 .\output\objects\iap.o: .\System\system.h
 .\output\objects\iap.o: Hardware\modbus.h
-.\output\objects\iap.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\string.h
+.\output\objects\iap.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

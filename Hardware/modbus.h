@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 
+uint16_t modbus_calculate_crc_ota(uint16_t cal_crc,uint8_t *data,uint32_t length);
 void modbus_generate_crcTable(void);
 uint16_t modbus_calculate_crc(uint8_t *data,uint16_t length);
 void modbus_msg_deal_handler(uint8_t *data,uint16_t length);

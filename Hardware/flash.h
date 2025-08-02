@@ -6,10 +6,11 @@
 
 #include "app_info.h"
 
-#define FLASH_PAGE_SIZE			1024*2
+#define FLASH_PAGE_SIZE			0x800				//1024*2
 
-ErrorStatus flash_erase_app1_block(void);
-ErrorStatus flash_erase_app2_block(void);
+ErrorStatus flash_erase_one_page(uint32_t page_addr);
+ErrorStatus flash_erase_app_block(void);
+ErrorStatus flash_erase_cache_block(void);
 ErrorStatus flash_erase_iap_info_block(void);
 void flash_write(uint32_t address,uint16_t *data,uint16_t len);
 void flash_read(uint32_t address,uint8_t *data,uint16_t len);

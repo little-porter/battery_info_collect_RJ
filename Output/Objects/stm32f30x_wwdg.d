@@ -2,7 +2,7 @@
 .\output\objects\stm32f30x_wwdg.o: .\Lib\inc\stm32f30x_wwdg.h
 .\output\objects\stm32f30x_wwdg.o: .\CMSIS\stm32f30x.h
 .\output\objects\stm32f30x_wwdg.o: .\CMSIS\core_cm4.h
-.\output\objects\stm32f30x_wwdg.o: D:\Keil\Keil_v5_arm\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\objects\stm32f30x_wwdg.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\output\objects\stm32f30x_wwdg.o: .\CMSIS\core_cmInstr.h
 .\output\objects\stm32f30x_wwdg.o: .\CMSIS\core_cmFunc.h
 .\output\objects\stm32f30x_wwdg.o: .\CMSIS\core_cmSimd.h

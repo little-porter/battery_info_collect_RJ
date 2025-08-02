@@ -84,6 +84,7 @@ void adc_opamp_config(void)
 **************************************************************************************************************/
 void adc2_dma2_ch1_config(void)
 {
+	DMA_DeInit(DMA2_Channel1);
 	DMA_InitTypeDef        DMA_InitStructure;
 //	NVIC_InitTypeDef      NVIC_InitStructure;
 	/* Enable DMA1 clock */
@@ -119,6 +120,7 @@ void adc2_dma2_ch1_config(void)
 **************************************************************************************************************/
 void adc3_dma2_ch5_config(void)
 {
+	DMA_DeInit(DMA2_Channel5);
 	DMA_InitTypeDef        DMA_InitStructure;
 	NVIC_InitTypeDef    NVIC_InitStructure;
 	/* Enable DMA1 clock */
@@ -156,6 +158,7 @@ void adc3_dma2_ch5_config(void)
 **************************************************************************************************************/
 void adc4_dma2_ch2_config(void)
 {
+	DMA_DeInit(DMA2_Channel2);
 	DMA_InitTypeDef        DMA_InitStructure;
 //	NVIC_InitTypeDef      NVIC_InitStructure;
 	/* Enable DMA1 clock */
