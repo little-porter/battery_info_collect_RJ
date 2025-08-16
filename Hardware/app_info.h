@@ -21,12 +21,12 @@
 //#pragma pack(1)     // 设置为1字节对齐，实现最紧密排列
 typedef struct _app_version
 {
+	uint16_t year;
+	uint16_t month;
+	uint16_t day;
 	uint16_t aa;
 	uint16_t bb;
-	uint16_t cc;
-	uint16_t day;
-	uint16_t month;
-	uint16_t year;
+	uint16_t cc;	
 }app_version_t;
 
 typedef struct _app_info

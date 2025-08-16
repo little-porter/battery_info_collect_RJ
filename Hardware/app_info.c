@@ -5,7 +5,7 @@
 const char *app_name = "电池信息采集软件";
 
 const app_info_t bsp_app_info __attribute__((at(FACTORY_APP_START_ADDR+APP_INFO_OFFSET))) = {
-	.version = {0,0,0,25,7,2025},
+	.version = {2025,7,25,0,0,0},
 	.name = "电池信息采集软件",
 	.describe = "天微电子——锂电",
 };

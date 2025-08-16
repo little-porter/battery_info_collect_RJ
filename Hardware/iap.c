@@ -11,6 +11,7 @@
 #define APP_TYPE		FACTORY_APP
 #define APP_MAX_SIZE	0xA000				//40kb
 #define REG_IAP_START_FLAG 0x0003
+#define REG_IAP_VERSION_YEAR 0x3000
 #define REG_IAP_VERSION_AA 0x3003
 #define REG_IAP_VERSION_BB 0x3004
 #define REG_IAP_VERSION_CC 0x3005
@@ -143,7 +144,7 @@ void iap_init(void)
 	iap_info.process = IAP_PROCESS_IDLE;
 	iap_info.iap_flag = IAP_FLAG_IDLE;
 	
-	modbus_reg_write(REG_IAP_VERSION_AA,(uint16_t *)(iap_info.run_app_addr+APP_INFO_OFFSET),6);
+	modbus_reg_write(REG_IAP_VERSION_YEAR,(uint16_t *)(iap_info.run_app_addr+APP_INFO_OFFSET),6);
 }
 
 
@@ -227,7 +228,7 @@ ErrorStatus iap_app_version_check(uint8_t *pdata,uint16_t num)
 		return SUCCESS;
 	}else{;}
 	
-	if(0 > memcmp(run_app_version,new_app_version,6)){
+	if(0 > memcmp(run_app_version,new_app_version,6*2)){
 		return SUCCESS;	
 	}else{
 		iap_info.iap_status = IAP_STATUS_VERSION_ERROR;
@@ -583,7 +584,7 @@ void iap_task(void)
 void iap_msg_deal_handler(uint8_t *data,uint16_t length)
 {
 	if(data[2] != 0x02)  return;
-	uint16_t data_num = data[6]<<8 | data[7];
+	uint16_t data_num = data[6] | data[7]<<8;
 	if(data[3] == 0x00){
 		iap_info.iap_flag = IAP_FLAG_START;
 		iap_info.upgrade_size = (data[8]<<0) | (data[9]<<8) | (data[10]<<16) |(data[11]<<24) ;
@@ -597,7 +598,10 @@ void iap_msg_deal_handler(uint8_t *data,uint16_t length)
 	}else{
 		return;
 	}	
-	iap_write_data(&data[8],data_num,500);		//将文件发送到iap
+	
+	if(data_num <= 1024){
+		iap_write_data(&data[8],data_num,500);		//将文件发送到iap
+	}else{;}
 }
 
 

@@ -52,7 +52,7 @@ I (.\Hardware\gas.h)(0x6874583D)
 I (.\Hardware\battery_info.h)(0x68706E99)
 I (.\Hardware\iap.h)(0x6886CE0D)
 I (.\Hardware\flash.h)(0x688C7767)
-I (.\Hardware\app_info.h)(0x688DBCD6)
+I (.\Hardware\app_info.h)(0x689BFF23)
 F (.\App\stm32f30x_it.c)(0x68706EAD)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\stm32f30x_it.o --omf_browse .\output\objects\stm32f30x_it.crf --depend .\output\objects\stm32f30x_it.d)
 I (App\stm32f30x_it.h)(0x68676C62)
 I (.\CMSIS\stm32f30x.h)(0x61C5CCA0)
@@ -721,7 +721,7 @@ I (.\Lib\inc\stm32f30x_usart.h)(0x61B7234A)
 I (.\Lib\inc\stm32f30x_wwdg.h)(0x61B7234B)
 I (.\Lib\inc\stm32f30x_misc.h)(0x61B7233B)
 I (Hardware\flash.h)(0x688C7767)
-I (Hardware\app_info.h)(0x688DBCD6)
+I (Hardware\app_info.h)(0x689BFF23)
 I (.\System\system.h)(0x688CAA11)
 I (.\System\sysTask.h)(0x68676A9E)
 F (.\Hardware\uart.c)(0x688CA718)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\uart.o --omf_browse .\output\objects\uart.crf --depend .\output\objects\uart.d)
@@ -915,7 +915,7 @@ I (.\System\sysTask.h)(0x68676A9E)
 I (Hardware\modbus.h)(0x688DB6C1)
 I (Hardware\average_filter.h)(0x686DD262)
 I (Hardware\flash.h)(0x688C7767)
-I (Hardware\app_info.h)(0x688DBCD6)
+I (Hardware\app_info.h)(0x689BFF23)
 F (.\Hardware\flash.c)(0x688C7767)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\flash.o --omf_browse .\output\objects\flash.crf --depend .\output\objects\flash.d)
 I (Hardware\flash.h)(0x688C7767)
 I (.\CMSIS\stm32f30x.h)(0x61C5CCA0)
@@ -942,7 +942,7 @@ I (.\Lib\inc\stm32f30x_tim.h)(0x61B72348)
 I (.\Lib\inc\stm32f30x_usart.h)(0x61B7234A)
 I (.\Lib\inc\stm32f30x_wwdg.h)(0x61B7234B)
 I (.\Lib\inc\stm32f30x_misc.h)(0x61B7233B)
-I (Hardware\app_info.h)(0x688DBCD6)
+I (Hardware\app_info.h)(0x689BFF23)
 I (.\System\system.h)(0x688CAA11)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
@@ -990,7 +990,7 @@ I (.\Console\fifo.h)(0x66EEA5E0)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E3CC2)
 I (.\Console\console.h)(0x66F0D228)
 I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5E8E3CC2)
-F (.\Hardware\iap.c)(0x688DBE81)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\iap.o --omf_browse .\output\objects\iap.crf --depend .\output\objects\iap.d)
+F (.\Hardware\iap.c)(0x689C37B6)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\iap.o --omf_browse .\output\objects\iap.crf --depend .\output\objects\iap.d)
 I (Hardware\iap.h)(0x6886CE0D)
 I (.\CMSIS\stm32f30x.h)(0x61C5CCA0)
 I (.\CMSIS\core_cm4.h)(0x61B70DC6)
@@ -1017,15 +1017,15 @@ I (.\Lib\inc\stm32f30x_usart.h)(0x61B7234A)
 I (.\Lib\inc\stm32f30x_wwdg.h)(0x61B7234B)
 I (.\Lib\inc\stm32f30x_misc.h)(0x61B7233B)
 I (Hardware\flash.h)(0x688C7767)
-I (Hardware\app_info.h)(0x688DBCD6)
+I (Hardware\app_info.h)(0x689BFF23)
 I (.\System\system.h)(0x688CAA11)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
 I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5E8E3CC2)
 I (.\System\sysTask.h)(0x68676A9E)
 I (Hardware\modbus.h)(0x688DB6C1)
 I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5E8E3CC2)
-F (.\Hardware\app_info.c)(0x688DB41D)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\app_info.o --omf_browse .\output\objects\app_info.crf --depend .\output\objects\app_info.d)
-I (Hardware\app_info.h)(0x688DBCD6)
+F (.\Hardware\app_info.c)(0x689BFF23)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\App -I .\CMSIS -I .\Lib\inc -I .\Hardware -I C:\keil_v5\ARM\ARMCLANG\include -I .\Console -I .\System-ID:\Keil_v5\ARM\Packs\Keil\STM32F3xx_DFP\3.0.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="541" -DSTM32F303xC -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT="1" -D__FPU_USED="1" -D__CC_ARM-o .\output\objects\app_info.o --omf_browse .\output\objects\app_info.crf --depend .\output\objects\app_info.d)
+I (Hardware\app_info.h)(0x689BFF23)
 I (.\System\system.h)(0x688CAA11)
 I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5E8E3CC2)
 I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5E8E3CC2)
